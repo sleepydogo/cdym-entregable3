@@ -11,10 +11,12 @@
 
 
 #include <stdio.h>
+#include "uart.h"
 #include <stdlib.h>
 
 void MENU_Show_Menu(void);
 void MENU_Command_Update(void);
 void MENU_Perform_Task(char c);
+
 
 #endif /* MENU_H_ */

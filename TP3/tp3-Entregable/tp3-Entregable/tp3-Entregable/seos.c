@@ -5,8 +5,14 @@
  *  Author: Usuario
  */ 
 
+#include "seos.h"
+
 uint8_t UART_flag = 0;
 uint8_t MENU_flag = 0;
+
+void SEOS_Init_Timer(uint8_t gap) {
+	
+}
 
 void SEOS_Schedule_Tasks() {
 	UART_flag=1; //actualizar perif�rico
@@ -24,7 +30,8 @@ void SEOS_Dispatch_Tasks() {
 	}
 }
 
-// Control de la duración del sonido
-ISR (Timer_Comp_vect) { 
+// Control de la duraci�n del sonido
+ISR (TIMER0_COMPA_vect) // ISR para la interrupci�n de comparaci�n del Timer 0
+{
 	SEOS_Schedule_Tasks();
 }

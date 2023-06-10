@@ -16,7 +16,7 @@
 
 void UART_Update(void);									// listo
 void UART_Write_String_To_Buffer( const char* STR_PTR );	// listo
-void UART_Write_Char_To_Buffer(const char Data);		// listo
+void UART_Write_Char_To_Buffer(const char Data);			// listo
 char UART_Get_Char_From_Buffer (char * ch);				// listo
 
 // Estas son las funciones que encapsulan el Hardware
