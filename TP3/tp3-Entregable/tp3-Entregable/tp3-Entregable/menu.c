@@ -7,8 +7,6 @@
 
 #include "menu.h"
 
-const char welcomePicture = "                     _      \n                    (_)     \n _ __ ___  _   _ ___ _  ___ \n| '_ ` _ \\| | | / __| |/ __|\n| | | | | | |_| \\__ \\ | (__ \n|_| |_| |_|\\__,_|___/_|\\___|\n";
-
 void MENU_Show_Menu(void)
 {
     // El menú se escribe en el buffer de transmisión

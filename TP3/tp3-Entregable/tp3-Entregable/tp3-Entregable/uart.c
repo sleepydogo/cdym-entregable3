@@ -12,6 +12,27 @@ char TX_buffer[100];
 uint8_t TXindice_lectura = 0:
 uint8_t RXindice_escritura = 0:
 
+void UART_Write_Char_To_Buffer ( const char data )
+{
+if (TXIndice escritura < TX_BUFFER_LENGTH)
+{ TX_buffer [ TXIndice escritura ] = data;
+TXIndice escritura ++;
+}
+else
+{ // Write buffer is full
+Error_code = ERROR_UART_FULL_BUFF;
+}
+}
+
+void UART_Write_String_To_Buffer( const char* STR_PTR )
+{
+char i = 0;
+while ( STR_PTR [ i ] != ‘\0’)
+{
+UART_Write_Char_To_Buffer ( STR_PTR [ i ] );
+i++;
+}
+}
 
 char UART_Get_Char_From_Buffer(char *ch)
 {
