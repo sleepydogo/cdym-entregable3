@@ -9,6 +9,7 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
+#include "uart.h"
 #include <avr/interrupt.h>
 #include <stdio.h>
 #include <string.h>
