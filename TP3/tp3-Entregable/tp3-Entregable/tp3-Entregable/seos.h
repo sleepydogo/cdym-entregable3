@@ -12,4 +12,8 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+
+void SEOS_Schedule_Tasks();
+void SEOS_Dispatch_Tasks();
+
 #endif /* SEOS_H_ */

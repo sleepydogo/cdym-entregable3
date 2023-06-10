@@ -24,13 +24,7 @@ void SEOS_Dispatch_Tasks() {
 	}
 }
 
-// Control de la duraci�n del sonido
-ISR (TIMER0_COMPA_vect) // ISR para la interrupci�n de comparaci�n del Timer 0
-{
-	if (duration_timer) duration_timer--; // Decremento el timer si > 0
-	else                                  // si timer es = 0
-	{
-		TCCR1A=0;	// Desactivo el timer 1
-		sound_playing = 0;                  // Borro el flag para avisar que no hay una nota sonando
-	}
+// Control de la duración del sonido
+ISR (Timer_Comp_vect) { 
+	SEOS_Schedule_Tasks();
 }

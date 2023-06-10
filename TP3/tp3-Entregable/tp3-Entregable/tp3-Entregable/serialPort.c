@@ -31,8 +31,7 @@ void SerialPort_TX_Interrupt_Enable(void){
 	UCSR0B |= (1<<UDRIE0);
 }
 
-void SerialPort_TX_Interrupt_Disable(void)
-{
+void SerialPort_TX_Interrupt_Disable(void){
 	UCSR0B &=~(1<<UDRIE0);
 }
 
@@ -46,7 +45,6 @@ void SerialPort_RX_Enable(void){
 void SerialPort_RX_Interrupt_Enable(void){
 	UCSR0B |= (1<<RXCIE0);
 }
-
 
 // Transmisión
 
@@ -70,7 +68,6 @@ void SerialPort_Send_String(char * msg){ //msg -> "Hola como andan hoy?" 20 ASCI
 	}
 }
 
-
 // Recepción
 
 // Espera hasta que el buffer de RX este completo.
@@ -78,7 +75,6 @@ void SerialPort_Wait_Until_New_Data(void){
 	// Pooling - Bloqueante, puede durar indefinidamente!
 	while(!(UCSR0A & (1<<RXC0)));
 }
-
 
 char SerialPort_Recive_Data(void){
 	return UDR0;

@@ -126,6 +126,36 @@
     <Compile Include="main.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="menu.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="menu.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rtttl.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rtttl.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="seos.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="seos.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="serialPort.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="serialPort.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="timer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="timer.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="uart.c">
       <SubType>compile</SubType>
     </Compile>
