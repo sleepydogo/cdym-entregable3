@@ -3,34 +3,40 @@
  *
  * Created: 09/06/2023 16:14:22
  *  Author: sleepydogo
- */ 
+ */
 
 #include "main.h"
 
-#define MAX_CANCIONES 11
+struct uart_driver uart_driver;
 
-unsigned int duration_timer;
-volatile unsigned int sound_playing = 0;
-unsigned char duration, octave;
-unsigned int tempo;
+char tx_buffer[100];
+char rx_buffer[100];
 
-int main()
+void tx_interrupt_handler(void)
 {
+	uart_transmit(&uart_driver, tx_buffer, strlen(tx_buffer));
+}
 
-	baud_rate = 
-	uart_init(uart_driver, tx_buffer, tx_size, rx_buffer, rx_size, tx_interrupt_handler, rx_interrupt_handler, baud_rate);
+void rx_interrupt_handler(void)
+{
+	char *data = uart_receive(&uart_driver, 100);
 
-	UCSR0B = (1 << TXEN0) | (1 << RXEN0);
+	// Procesamiento de data
+	// ...
+}
 
-	UCSR0C = (1 << UCSZ01) | (1 << UCSZ00);
+void main()
+{
+	uint8_t baud_rate = 0x33; 
+	uart_init(&uart_driver, tx_buffer, 100, rx_buffer, 100, tx_interrupt_handler, rx_interrupt_handler, baud_rate);
 
-	uart_transmit(uart_driver, "Hello, world!", strlen("Hello, world!"));
+	uart_transmit(&uart_driver, "a", strlen("a"));
 
 	while (1)
 	{
-		uart_driver->rx_interrupt_handler();
+		uart_driver.rx_interrupt_handler();
 
-		char data = uart_receive();
+		char data = uart_driver.rx_buffer[0];
 
 		if (data == '\n')
 		{

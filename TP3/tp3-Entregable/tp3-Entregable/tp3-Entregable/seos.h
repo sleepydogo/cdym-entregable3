@@ -10,7 +10,6 @@
 #define SEOS_H_
 
 
-
-
-
+#include <avr/io.h>
+#include <avr/interrupt.h>
 #endif /* SEOS_H_ */

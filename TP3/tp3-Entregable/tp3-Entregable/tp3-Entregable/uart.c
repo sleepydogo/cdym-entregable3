@@ -7,22 +7,7 @@
 
 #include "uart.h"
 
-// UART driver
-struct uart_driver
-{
-    // Buffer de transmision
-    char *tx_buffer;
-    // Buffer de recepcion
-    char *rx_buffer;
-    // Tamaño de buffer de transmision
-    int tx_size;
-    // Tamaño de buffer de recepcion
-    int rx_size;
-    // Handler de interrupciones de transmision...
-    void (*tx_interrupt_handler)(void);
-    // Handler de interrupciones de recepcion
-    void (*rx_interrupt_handler)(void);
-};
+struct uart_driver *local_copy_driver;
 
 // Inicializamos el driver
 void uart_init(struct uart_driver *driver, char *tx_buffer, int tx_size, char *rx_buffer, int rx_size, void (*tx_interrupt_handler)(void), void (*rx_interrupt_handler)(void), uint8_t baud_rate)
@@ -33,6 +18,7 @@ void uart_init(struct uart_driver *driver, char *tx_buffer, int tx_size, char *r
     driver->rx_size = rx_size;
     driver->tx_interrupt_handler = tx_interrupt_handler;
     driver->rx_interrupt_handler = rx_interrupt_handler;
+	local_copy_driver = driver;
 
     // Seteamos el baud rate de acuerdo a baud_rate
     UBRR0H = (unsigned char)(baud_rate >> 8);
@@ -70,7 +56,7 @@ char *uart_receive(struct uart_driver *driver, int size)
     if (size > driver->rx_size)
     {
         // No hay suficiente espacio..
-        return NULL;
+        return 0;
     }
 
     // Copiamos los datos en data desde el buffer de recepcion 
@@ -87,10 +73,10 @@ char *uart_receive(struct uart_driver *driver, int size)
 ISR(USART0_UDRE_vect)
 {
     // Transmitimos los byte al buffer de transmision uno a uno
-    UDR0 = *uart_driver->tx_buffer++;
+    UDR0 = *local_copy_driver->tx_buffer++;
 
     // Si el buffer de transmision esta vacio, deshabilitamos las interrupciones de transmision 
-    if (uart_driver->tx_buffer == uart_driver->tx_end)
+    if (local_copy_driver->tx_buffer == 100)
     {
         UCSR0B &= ~(1 << UDRIE0);
     }
@@ -100,12 +86,12 @@ ISR(USART0_UDRE_vect)
 ISR(USART0_RX_vect)
 {
     // Leemos los bytes del buffer de recepcion uno a uno
-    *uart_driver->rx_buffer++ = UDR0;
+    *local_copy_driver->rx_buffer++ = UDR0;
 
     // If the receive buffer is full, signal the consumer thread
     // Si el buffer esta lleno, señalamos al thread de consumidor
-    if (uart_driver->rx_buffer == uart_driver->rx_end)
+    if (local_copy_driver->rx_buffer == 100)
     {
-        uart_driver->rx_interrupt_handler();
+        local_copy_driver->rx_interrupt_handler();
     }
 }

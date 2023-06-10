@@ -9,7 +9,7 @@ uint8_t UART_flag = 0;
 uint8_t MENU_flag = 0;
 
 void SEOS_Schedule_Tasks() {
-	UART_flag=1; //actualizar periférico
+	UART_flag=1; //actualizar perifï¿½rico
 	MENU_flag=1; //actualizar menu
 }
 
@@ -24,8 +24,8 @@ void SEOS_Dispatch_Tasks() {
 	}
 }
 
-// Control de la duración del sonido
-ISR (TIMER0_COMPA_vect) // ISR para la interrupción de comparación del Timer 0
+// Control de la duraciï¿½n del sonido
+ISR (TIMER0_COMPA_vect) // ISR para la interrupciï¿½n de comparaciï¿½n del Timer 0
 {
 	if (duration_timer) duration_timer--; // Decremento el timer si > 0
 	else                                  // si timer es = 0
