@@ -7,91 +7,75 @@
 
 #include "uart.h"
 
-struct uart_driver *local_copy_driver;
+char RX_buffer[100];
+char TX_buffer[100];
+uint8_t TXindice_lectura = 0:
+uint8_t RXindice_escritura = 0:
 
-// Inicializamos el driver
-void uart_init(struct uart_driver *driver, char *tx_buffer, int tx_size, char *rx_buffer, int rx_size, void (*tx_interrupt_handler)(void), void (*rx_interrupt_handler)(void), uint8_t baud_rate)
+
+char UART_Get_Char_From_Buffer(char *ch)
 {
-    driver->tx_buffer = tx_buffer;
-    driver->rx_buffer = rx_buffer;
-    driver->tx_size = tx_size;
-    driver->rx_size = rx_size;
-    driver->tx_interrupt_handler = tx_interrupt_handler;
-    driver->rx_interrupt_handler = rx_interrupt_handler;
-	local_copy_driver = driver;
-
-    // Seteamos el baud rate de acuerdo a baud_rate
-    UBRR0H = (unsigned char)(baud_rate >> 8);
-    UBRR0L = (unsigned char)baud_rate;
-
-    // Deshabilitamos todas las funciones del USART
-    UCSR0B = 0;
-
-    // Seteamos el data type del UART
-    UCSR0C = (1 << UCSZ01) | (1 << UCSZ00);
-}
-
-
-// Transmision de datos
-void uart_transmit(struct uart_driver *driver, char *data, int size)
-{
-    // Checkeamos si hay suficiente espacio en el buffer de transmision
-    if (size > driver->tx_size)
+    // Hay nuevo dato en el buffer?
+    if (RXIndex_lectura < RXIndex_escritura)
     {
-        // No hay suficiente espacio..
-        return;
+        *ch = RX_buffer[RXIndex_lectura];
+        RXIndex_lectura++;
+        return 1; // Hay nuevo dato
     }
-
-    // Copiamos los datos al buffer de transmision
-    memcpy(driver->tx_buffer, data, size);
-
-    // Habilitamos la interrupcion de transmision
-    UCSR0B |= (1 << UDRIE0);
+    else
+    {
+        RXIndex_lectura = 0;
+        RXIndex_escritura = 0;
+        return 0; // No Hay
+    }
 }
 
-// Recepcion de datos
-char *uart_receive(struct uart_driver *driver, int size)
+void UART_Update(void)
 {
-    // Checkeamos si hay suficiente espacio en el buffer de recepcion
-    if (size > driver->rx_size)
+    char dato;
+    if (TXindice_lectura < TXindice_escritura) // Hay byte en el buffer Tx para transmitir?
     {
-        // No hay suficiente espacio..
+        UART_Send_Char(TX_buffer[TXindice_lectura]);
+        TXindice_lectura++;
+    }
+    else
+    { // No hay datos disponibles para enviar
+        TXindice_lectura = 0;
+        TXindice_escritura = 0;
+    }
+    // se ha recibido algún byte?
+    if (UART_Receive_data(&dato) != 0)
+    { // Byte recibido. Escribir byte en buffer de entrada
+        if (RXIndex_escritura < RX_BUFFER_LENGTH)
+        {
+            RX_buffer[RXIndex_escritura] = dato; // Guardar dato en buffer
+            RXIndex_escritura++;                 // Inc sin desbordar buffer
+        }
+        else
+            Error_code = ERROR_UART_FULL_BUFF;
+    }
+}
+
+void UART_Send_Char(char dato)
+{
+    long Timeout = 0;
+    while ((++Timeout) && ((UCSR0A & (1 << UDRE0)) == 0))
+        ;
+    If(Timeout != 0)
+        UDR0 = dato;
+    else
+    {
+        // TX_UART did not respond – error
+    }
+}
+
+char UART_Receive_data(char *dato)
+{
+    if (UCSR0A & (1 << RXC0))
+    {
+        *dato = UDR0;
+        return 1;
+    }
+    else
         return 0;
-    }
-
-    // Copiamos los datos en data desde el buffer de recepcion 
-    char *data = driver->rx_buffer;
-
-    // Deshabilitamos las interrupciones de recepcion
-    UCSR0B &= ~(1 << RXCIE0);
-
-    // Retornamos los datos...
-    return data;
-}
-
-// Handler de interrupciones de transmision
-ISR(USART0_UDRE_vect)
-{
-    // Transmitimos los byte al buffer de transmision uno a uno
-    UDR0 = *local_copy_driver->tx_buffer++;
-
-    // Si el buffer de transmision esta vacio, deshabilitamos las interrupciones de transmision 
-    if (local_copy_driver->tx_buffer == 100)
-    {
-        UCSR0B &= ~(1 << UDRIE0);
-    }
-}
-
-// Handler de interrupciones de recepcion
-ISR(USART0_RX_vect)
-{
-    // Leemos los bytes del buffer de recepcion uno a uno
-    *local_copy_driver->rx_buffer++ = UDR0;
-
-    // If the receive buffer is full, signal the consumer thread
-    // Si el buffer esta lleno, señalamos al thread de consumidor
-    if (local_copy_driver->rx_buffer == 100)
-    {
-        local_copy_driver->rx_interrupt_handler();
-    }
 }

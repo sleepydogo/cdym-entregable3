@@ -9,48 +9,44 @@
 
 const char welcomePicture = "                     _      \n                    (_)     \n _ __ ___  _   _ ___ _  ___ \n| '_ ` _ \\| | | / __| |/ __|\n| | | | | | |_| \\__ \\ | (__ \n|_| |_| |_|\\__,_|___/_|\\___|\n";
 
-void welcomeMenu(void) {
-    
+void MENU_Show_Menu(void)
+{
+    // El menú se escribe en el buffer de transmisión
+    UART_Write_String_To_Buffer("Menu:\n\r");
+    UART_Write_String_To_Buffer("a – Read PORT1\n\r");
+    UART_Write_String_To_Buffer("b – Read PORT2\n\r");
+    UART_Write_String_To_Buffer("? : ");
 }
 
-
-int main()
+void MENU_Command_Update(void)
 {
-    const char *options[] = {"Play", "Stop", "Num", "Reset"};
-    int num_options = sizeof(options) / sizeof(options[0]);
-
-    welcomeMenu();
-    printf("Bienvenido.. \n")
-    for (int i = 0; i < num_options; i++)
+    char ch;
+    // Check for user inputs
+    if (UART_Get_Char_From_Buffer(&Ch) != 0)
     {
-        printf("%d. %s\n", i + 1, options[i]);
+        MENU_Perform_Task(Ch);
+        MENU_Show_Menu();
     }
+}
 
-    int choice;
-    scanf("%d", &choice);
-
-    switch (choice)
+void MENU_Perform_Task(char c)
+{
+    // Echo the menu option
+    UART_Write_Char_To_Buffer(c);
+    UART_Write_Char_To_Buffer( ’\n\r’);
+    switch (c)
     {
-    case 1:
-        // Play
-        printf("Playing...\n");
-        break;
-    case 2:
-        // Stop
-        printf("Stopping...\n");
-        break;
-    case 3:
-        // Num
-        printf("Numbering...\n");
-        break;
-    case 4:
-        // Reset
-        printf("Resetting...\n");
-        break;
-    default:
-        printf("Invalid choice.\n");
+    case 'a':
+    case 'A':
+    {
+        Function_1(); // Perform the task PORT1
         break;
     }
-
-    return 0;
+    case 'b':
+    case 'B':
+    {
+        Function_2(); // Perform the task PORT2
+        break;
+    }
+    }
 }

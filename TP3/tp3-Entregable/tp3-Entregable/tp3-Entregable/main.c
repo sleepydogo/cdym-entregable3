@@ -5,44 +5,17 @@
  *  Author: sleepydogo
  */
 
-#include "main.h"
-
-struct uart_driver uart_driver;
-
-char tx_buffer[100];
-char rx_buffer[100];
-
-void tx_interrupt_handler(void)
+void main(void)
 {
-	uart_transmit(&uart_driver, tx_buffer, strlen(tx_buffer));
-}
-
-void rx_interrupt_handler(void)
-{
-	char *data = uart_receive(&uart_driver, 100);
-
-	// Procesamiento de data
-	// ...
-}
-
-void main()
-{
-	uint8_t baud_rate = 0x33; 
-	uart_init(&uart_driver, tx_buffer, 100, rx_buffer, 100, tx_interrupt_handler, rx_interrupt_handler, baud_rate);
-
-	uart_transmit(&uart_driver, "a", strlen("a"));
-
+	// Set baud rate to 9600
+	SerialPort_Init(BR9600);
+	// Set up RTI 5ms tick
+	sEOS_Init_Timer(5);
+	// Menu first time
+	MENU_Show_Menu();
 	while (1)
 	{
-		uart_driver.rx_interrupt_handler();
-
-		char data = uart_driver.rx_buffer[0];
-
-		if (data == '\n')
-		{
-			break;
-		}
+		SEOS_Dispatch_Tasks();
+		SEOS_Go_To_Sleep();
 	}
-
-	return 0;
 }
