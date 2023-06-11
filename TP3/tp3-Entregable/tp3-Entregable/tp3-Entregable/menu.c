@@ -9,10 +9,8 @@
 
 void MENU_Show_Menu(void)
 {
-    // El menú se escribe en el buffer de transmisión
-	UART_Write_String_To_Buffer("                     _      \n                    (_)     \n _ __ ___  _   _ ___ _  ___ \n| '_ ` _ \\| | | / __| |/ __|\n| | | | | | |_| \\__ \\ | (__ \n|_| |_| |_|\\__,_|___/_|\\___|\n\r");
-    UART_Write_String_To_Buffer("---------created by sleepydogo, merianro--------\n\r");
-	UART_Write_String_To_Buffer("Menu:\n\r");
+	// El menú se escribe en el buffer de transmisión
+ 	UART_Write_String_To_Buffer("Menu:\n\r");
     UART_Write_String_To_Buffer("	* PLAY: reproduce la cancion seleccionada\n\r");
     UART_Write_String_To_Buffer("	* STOP: detiene la reproduccion del sonido en curso\n\r");
     UART_Write_String_To_Buffer("	* NUM: numero de cancion a seleccionar de la lista [1 a N]\n\r");

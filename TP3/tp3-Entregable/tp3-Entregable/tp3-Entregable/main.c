@@ -11,9 +11,12 @@ void main(void){
 	int aux = 0;
 	// Set baud rate to 9600
 	UART_Init(BR9600);
-	UART_Write_String_To_Buffer("HOLA BOCA\n\r");
+	TIMER_Init();
+	//UART_Write_String_To_Buffer("                     _      \n                    (_)     \n _ __ ___  _   _ ___ _  ___ \n| '_ ` _ \\| | | / __| |/ __|\n| | | | | | |_| \\__ \\ | (__ \n|_| |_| |_|\\__,_|___/_|\\___|\n\r");
+	//UART_Write_String_To_Buffer("---------created by sleepydogo, merianro--------\n\r");
+	
+	MENU_Show_Menu();
 	while (1){
-		UART_Update(&aux);
-		_delay_ms(100);
+		SEOS_Dispatch_Tasks();
 	}
 }

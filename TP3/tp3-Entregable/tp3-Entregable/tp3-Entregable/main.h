@@ -8,8 +8,10 @@
 
 #ifndef MAIN_H_
 #define MAIN_H_
+#define F_CPU 16000000UL
 
 #include "uart.h"
+#include "timer.h"
 #include "menu.h"
 #include "seos.h"
 #include "SerialPort.h"
