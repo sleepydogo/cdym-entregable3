@@ -12,6 +12,7 @@
 #include <avr/interrupt.h>
 #include <stdint.h>
 
+#define FLAG_datos_recibidos 0
 #define RX_BUFFER_LENGTH 100 
 #define TX_BUFFER_LENGTH 100
 #define ERROR_UART_FULL_BUFF -1

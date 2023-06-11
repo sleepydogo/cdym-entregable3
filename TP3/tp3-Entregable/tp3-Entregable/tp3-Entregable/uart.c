@@ -49,6 +49,9 @@ char UART_Get_Char_From_Buffer(char *ch){
 
 void UART_Update(int * Error_code){
     char dato;
+	if (FLAG_datos_recibidos) {
+		 
+	}
     if (TXindice_lectura < TXindice_escritura) { // Hay byte en el buffer Tx para transmitir?
         UART_Send_Char(TX_buffer[TXindice_lectura]);
         TXindice_lectura++;
@@ -67,6 +70,7 @@ void UART_Update(int * Error_code){
             *Error_code = ERROR_UART_FULL_BUFF;
     }
 }
+
 // Estas son las funciones que encapsulan el Hardware
 void UART_Init(uint8_t baud){
 		// config = 0x33 ==> Configuro UART 9600bps, 8 bit data, 1 stop @ F_CPU = 8MHz.
@@ -81,6 +85,7 @@ void UART_Init(uint8_t baud){
 		//RX Enable
 		UCSR0B |= (1<<RXEN0);
 }
+
 void UART_Send_Char (char dato)
 {
 	long Timeout = 0;
@@ -99,4 +104,21 @@ char UART_Receive_data(char *dato){
         return 1;
     }else
 		return 0;
+}
+
+
+ISR(USART_TX_vect) {
+	UDR0 = TX_buffer[TXindice_lectura];
+	TXindice_lectura++;
+	if (TXindice_lectura == TX_BUFFER_LENGTH) {
+		TXindice_lectura = 0;
+		UCSR0B &= ~(1<<TXCIE0); // deshabilita la interrupción de transmisión completa en el registro de control de la USART, asegurándose de que el microcontrolador no sea interrumpido cuando se completa la transmisión de datos a través de la USART.
+	}
+}
+
+ISR(USART_RX_vect) {
+	RX_buffer[RXindice_escritura++] = UDR0;
+	if (RXindice_escritura == RX_BUFFER_LENGTH) {
+		FLAG_datos_recibidos = 1;
+	}
 }

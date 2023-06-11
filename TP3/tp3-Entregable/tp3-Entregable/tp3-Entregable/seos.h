@@ -12,8 +12,10 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-
+#include <avr/sleep.h>
+void SEOS_Init_Timer();
 void SEOS_Schedule_Tasks();
 void SEOS_Dispatch_Tasks();
+void SEOS_Go_To_Sleep();
 
 #endif /* SEOS_H_ */
