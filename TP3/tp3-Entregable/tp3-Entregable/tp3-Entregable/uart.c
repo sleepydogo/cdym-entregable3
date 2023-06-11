@@ -7,8 +7,8 @@
 
 #include "uart.h"
 
-char RX_buffer[100];
-char TX_buffer[100];
+char RX_buffer[RX_BUFFER_LENGTH];
+char TX_buffer[TX_BUFFER_LENGTH];
 uint8_t TXindice_lectura = 0, TXindice_escritura = 0;
 uint8_t RXindice_lectura = 0, RXindice_escritura = 0;
 
@@ -84,6 +84,8 @@ void UART_Init(uint8_t baud){
 		UCSR0B |= (1<<TXEN0);
 		//RX Enable
 		UCSR0B |= (1<<RXEN0);
+		
+		
 }
 
 void UART_Send_Char (char dato)
@@ -91,7 +93,7 @@ void UART_Send_Char (char dato)
 	long Timeout = 0;
 	while ( ( ++Timeout ) && ((UCSR0A & (1<<UDRE0))==0));
 	if (Timeout != 0)
-	UDR0 = dato;
+		UDR0 = dato;
 	else {
 		
 	}

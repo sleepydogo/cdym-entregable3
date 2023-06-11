@@ -4,7 +4,8 @@
  * Created: 09/06/2023 18:53:13
  *  Author: Usuario
  */ 
-/*
+#include "timer.h"
+
 void TIMER_Init(){
 	// ------------------------ Timer 0 ------------------------
 	
@@ -13,7 +14,6 @@ void TIMER_Init(){
 	TCCR0A = (1<<WGM01);   // Modo CTC, clock interno, prescalador 64
 	TCCR0B = (1<<CS01)|(1<<CS00);   // Modo CTC, clock interno, prescalador 64
 	TIMSK0 = (1<<OCIE0A);   // Habilito Timer 0 en modo de interrupción de comparación
-	
 	
 	// ------------------------ Timer 1 ------------------------
 	
@@ -26,4 +26,3 @@ void TIMER_Init(){
 	
 	sei();
 }
-*/
