@@ -80,7 +80,6 @@ char SerialPort_Recive_Data(void){
 	return UDR0;
 }
 
-
 void SerialPort_Send_uint8_t(uint8_t num){
 	
 	SerialPort_Wait_For_TX_Buffer_Free();

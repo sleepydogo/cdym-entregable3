@@ -9,94 +9,94 @@
 
 char RX_buffer[100];
 char TX_buffer[100];
-uint8_t TXindice_lectura = 0:
-uint8_t RXindice_escritura = 0:
+uint8_t TXindice_lectura = 0, TXindice_escritura = 0;
+uint8_t RXindice_lectura = 0, RXindice_escritura = 0;
 
-void UART_Write_Char_To_Buffer ( const char data )
-{
-if (TXIndice escritura < TX_BUFFER_LENGTH)
-{ TX_buffer [ TXIndice escritura ] = data;
-TXIndice escritura ++;
-}
-else
-{ // Write buffer is full
-Error_code = ERROR_UART_FULL_BUFF;
-}
-}
-
-void UART_Write_String_To_Buffer( const char* STR_PTR )
-{
-char i = 0;
-while ( STR_PTR [ i ] != ‘\0’)
-{
-UART_Write_Char_To_Buffer ( STR_PTR [ i ] );
-i++;
-}
+void UART_Write_Char_To_Buffer (const char data, int * Error_code){
+	
+	if (TXindice_escritura < TX_BUFFER_LENGTH){ 
+		TX_buffer [TXindice_escritura] = data;
+		TXindice_escritura++;
+	}else{ 
+		// Write buffer is full
+		*Error_code = ERROR_UART_FULL_BUFF;
+	}
 }
 
-char UART_Get_Char_From_Buffer(char *ch)
-{
+void UART_Write_String_To_Buffer(const char* STR_PTR){
+	char i = 0;
+	int aux = 0;
+	while (STR_PTR[i] != '\0'){
+		UART_Write_Char_To_Buffer (STR_PTR[i],&aux);
+		i++;
+	}
+}
+
+char UART_Get_Char_From_Buffer(char *ch){
     // Hay nuevo dato en el buffer?
-    if (RXIndex_lectura < RXIndex_escritura)
-    {
-        *ch = RX_buffer[RXIndex_lectura];
-        RXIndex_lectura++;
+    if (RXindice_lectura < RXindice_escritura){
+        *ch = RX_buffer[RXindice_lectura];
+        RXindice_lectura++;
         return 1; // Hay nuevo dato
     }
     else
     {
-        RXIndex_lectura = 0;
-        RXIndex_escritura = 0;
+        RXindice_lectura = 0;
+        RXindice_escritura = 0;
         return 0; // No Hay
     }
 }
 
-void UART_Update(void)
-{
+void UART_Update(int * Error_code){
     char dato;
-    if (TXindice_lectura < TXindice_escritura) // Hay byte en el buffer Tx para transmitir?
-    {
+    if (TXindice_lectura < TXindice_escritura) { // Hay byte en el buffer Tx para transmitir?
         UART_Send_Char(TX_buffer[TXindice_lectura]);
         TXindice_lectura++;
-    }
-    else
-    { // No hay datos disponibles para enviar
+    }else{ // No hay datos disponibles para enviar
         TXindice_lectura = 0;
         TXindice_escritura = 0;
     }
     // se ha recibido algún byte?
     if (UART_Receive_data(&dato) != 0)
     { // Byte recibido. Escribir byte en buffer de entrada
-        if (RXIndex_escritura < RX_BUFFER_LENGTH)
-        {
-            RX_buffer[RXIndex_escritura] = dato; // Guardar dato en buffer
-            RXIndex_escritura++;                 // Inc sin desbordar buffer
+        if (RXindice_escritura < RX_BUFFER_LENGTH){
+            RX_buffer[RXindice_escritura] = dato;	// Guardar dato en buffer
+            RXindice_escritura++;	// Inc sin desbordar buffer
         }
         else
-            Error_code = ERROR_UART_FULL_BUFF;
+            *Error_code = ERROR_UART_FULL_BUFF;
     }
 }
-
-void UART_Send_Char(char dato)
+// Estas son las funciones que encapsulan el Hardware
+void UART_Init(uint8_t baud){
+		// config = 0x33 ==> Configuro UART 9600bps, 8 bit data, 1 stop @ F_CPU = 8MHz.
+		// config = 0x25 ==> Configuro UART 9600bps, 8 bit data, 1 stop @ F_CPU = 4Hz.
+		UCSR0B = 0;
+		UCSR0C = (1<<UCSZ01) | (1<<UCSZ00);
+		UBRR0H = (unsigned char)(baud>>8);
+		UBRR0L = (unsigned char)baud;
+		
+		//TX Enable
+		UCSR0B |= (1<<TXEN0);
+		//RX Enable
+		UCSR0B |= (1<<RXEN0);
+}
+void UART_Send_Char (char dato)
 {
-    long Timeout = 0;
-    while ((++Timeout) && ((UCSR0A & (1 << UDRE0)) == 0))
-        ;
-    If(Timeout != 0)
-        UDR0 = dato;
-    else
-    {
-        // TX_UART did not respond – error
-    }
+	long Timeout = 0;
+	while ( ( ++Timeout ) && ((UCSR0A & (1<<UDRE0))==0));
+	if (Timeout != 0)
+	UDR0 = dato;
+	else {
+		
+	}
+	return;
 }
 
-char UART_Receive_data(char *dato)
-{
-    if (UCSR0A & (1 << RXC0))
-    {
+char UART_Receive_data(char *dato){
+    if (UCSR0A & (1 << RXC0)){
         *dato = UDR0;
         return 1;
-    }
-    else
-        return 0;
+    }else
+		return 0;
 }

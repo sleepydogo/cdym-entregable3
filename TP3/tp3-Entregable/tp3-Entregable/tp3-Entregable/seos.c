@@ -4,7 +4,7 @@
  * Created: 09/06/2023 18:57:26
  *  Author: Usuario
  */ 
-
+/* 
 uint8_t UART_flag = 0;
 uint8_t MENU_flag = 0;
 
@@ -28,3 +28,4 @@ void SEOS_Dispatch_Tasks() {
 ISR (Timer_Comp_vect) { 
 	SEOS_Schedule_Tasks();
 }
+*/ 

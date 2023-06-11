@@ -20,18 +20,18 @@ void MENU_Command_Update(void)
 {
     char ch;
     // Check for user inputs
-    if (UART_Get_Char_From_Buffer(&Ch) != 0)
+    if (UART_Get_Char_From_Buffer(&ch) != 0)
     {
-        MENU_Perform_Task(Ch);
+        MENU_Perform_Task(ch);
         MENU_Show_Menu();
     }
 }
 
-void MENU_Perform_Task(char c)
+/*void MENU_Perform_Task(char c)
 {
     // Echo the menu option
     UART_Write_Char_To_Buffer(c);
-    UART_Write_Char_To_Buffer( ’\n\r’);
+    UART_Write_Char_To_Buffer( "\n\r");
     switch (c)
     {
     case 'a':
@@ -47,4 +47,4 @@ void MENU_Perform_Task(char c)
         break;
     }
     }
-}
+}*/

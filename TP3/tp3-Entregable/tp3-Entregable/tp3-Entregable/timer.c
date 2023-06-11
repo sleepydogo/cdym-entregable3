@@ -4,7 +4,7 @@
  * Created: 09/06/2023 18:53:13
  *  Author: Usuario
  */ 
-
+/*
 void TIMER_Init(){
 	// ------------------------ Timer 0 ------------------------
 	
@@ -26,3 +26,4 @@ void TIMER_Init(){
 	
 	sei();
 }
+*/
