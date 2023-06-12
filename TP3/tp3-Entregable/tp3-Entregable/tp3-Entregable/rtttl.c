@@ -9,7 +9,12 @@
 
 #include "rtttl.h"
 
-uint8_t sound_playing = 0, duration_timer, duration, tempo, octave;
+
+unsigned char temp_duration, temp_octave, current_note, dot_flag;
+unsigned int calc_duration;
+
+
+uint8_t sound_playing = 0, duration_timer, duration, tempo, octave, FLAG_stop = 1, readyToPlay = 0;
 
 const char *rtttl_library[]=
 {
@@ -24,8 +29,9 @@ const char *rtttl_library[]=
 	"Adamsfamily:d=4,o=5,b=160:8c,f,8a,f,8c,b4,2g,8f,e,8g,e,8e4,a4,2f,8c,f,8a,f,8c,b4,2g,8f,e,8c,d,8e,1f,8c,8d,8e,8f,1p,8d,8e,8f#,8g,1p,8d,8e,8f#,8g,p,8d,8e,8f#,8g,p,8c,8d,8e,8f",
 
 	"Argentina:d=4,o=5,b=70:8e.4,8e4,8e4,8e.4,8f4,8g4,8a4,g4,8p,8g4,8a4,8a4,8g4,c,g4,8f4,e.4,8p,8e4,8f4,8g4,8d4,d4,8d4,8e4,8f4,c4,16p,8c4,8d4,8c4,8e4,g4,16p,8g4,8g4,8a4,c,16p",
-
 };
+
+char *song;
 
 const unsigned int note[4][12] =
 {   // C    C#    D     D#    E     F     F#    G     G#    A     A#    B
@@ -34,6 +40,18 @@ const unsigned int note[4][12] =
 	{1047, 1109, 1175, 1244, 1319, 1397, 1480, 1568, 1660, 1760, 1865, 1976}, // 6ta octava
 	{2093, 2218, 2349, 2489, 2637, 2794, 2960, 3136, 3320, 3520, 3728, 3951}  // 7ma octava
 };
+
+// void RTTTL_nombre_cancion() {
+// 	
+// }
+
+uint8_t RTTTL_Flag_stop_status() {
+	return FLAG_stop;
+}
+
+void RTTTL_stop_song() {
+	FLAG_stop = 1; 
+}
 
 // Saco el sonido por el PIN5 del PORTD: freq en Hz, dur en ms
 void sound(unsigned int freq, unsigned int dur)
@@ -51,11 +69,13 @@ void sound(unsigned int freq, unsigned int dur)
 	sound_playing = 1;          // Activo el flag para avisar que hay una nota sonando
 }
 
+void RTTTL_cambiar_cancion(uint8_t cancion_elegida) {
+	*song = rtttl_library[cancion_elegida];
+}
+
 // Esta función reproduce una canción que se le pase en un string con formato RTTTL
-void play_song(char *song)
+void RTTTL_play_song()
 {
-	unsigned char temp_duration, temp_octave, current_note, dot_flag;
-	unsigned int calc_duration;
 	duration = 4;                 // Duración estándar = 4/4 = 1 beat
 	tempo = 63;                   // Tempo estándar = 63 bpm
 	octave = 6;                   // Octava estándar = 6th
@@ -116,10 +136,13 @@ void play_song(char *song)
 		while (*song == ',') song++;    // Salteo ','
 	}
 	song++;                       // Avanzo al próximo caracter
-	// read the musical notes
-	while (*song)                 // Repito hasta que el caracter sea null
-	{
-		current_note = 255;         // Nota por defecto = pausa
+	readyToPlay = 1;
+}
+
+void RTTTL_play_note() {
+		if (readyToPlay == 0) return;
+
+		//current_note = 255;         // Nota por defecto = pausa
 		temp_octave = octave;       // Seteo la octava a la por defecto de la canción
 		temp_duration = duration;   // Seteo la duración a la por defecto de la canción
 		dot_flag = 0;               // Borro el flag de detección de punto
@@ -153,10 +176,7 @@ void play_song(char *song)
 			current_note++;   // Incremento la nota (A->A#, C->C#, D->D#, F->F#, G->G#)
 			song++;                   // Avanzo al próximo caracter
 		}
-
-
-
-
+		
 		// Busco '.' (extiende la duración de la nota un 50%)
 		if (*song=='.')
 		{
@@ -188,5 +208,14 @@ void play_song(char *song)
 			sound_playing = 1;
 		}
 		while (sound_playing);      // Espero a la que nota/pausa en curso finalice
+}
+
+
+void RTTTL_flags_interrupcion() {
+	if (duration_timer) duration_timer--; // Decremento el timer si > 0
+	else                                  // si timer es = 0
+	{
+		TCCR1A=0;	// Desactivo el timer 1
+		sound_playing = 0;                  // Borro el flag para avisar que no hay una nota sonando
 	}
 }

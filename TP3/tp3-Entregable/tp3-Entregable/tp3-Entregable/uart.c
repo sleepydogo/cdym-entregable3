@@ -142,7 +142,7 @@ ISR(USART_RX_vect) {
 		}
 		if (aux == '\n'){
 			FLAG_datos_recibidos = 1;
-			UART_RX_Interrupt_Disable();			
+			UART_RX_Interrupt_Disable();	
 		}
 	}
 	UART_Write_Char_To_Buffer(aux,FLAG_errorBuffer);

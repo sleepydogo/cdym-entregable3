@@ -13,6 +13,9 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
+
+#include "rtttl.h" 
+
 void SEOS_Init_Timer();
 void SEOS_Schedule_Tasks();
 void SEOS_Dispatch_Tasks();

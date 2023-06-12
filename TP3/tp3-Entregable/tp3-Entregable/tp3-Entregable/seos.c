@@ -8,8 +8,7 @@
 
 #include "seos.h"
 
-uint8_t UART_flag = 0;
-uint8_t MENU_flag = 0;
+uint8_t UART_flag = 0, MENU_contador = 0;
 
 void SEOS_Go_To_Sleep() {
 	set_sleep_mode(SLEEP_MODE_PWR_DOWN);  // Configura el modo de bajo consumo
@@ -40,12 +39,13 @@ void SEOS_Init_Timer() {
 	sei();
 }
 
-uint8_t contador_UART = 0;
 uint8_t error_uart = 0;
 
 void SEOS_Schedule_Tasks() {
 	UART_flag=1; //actualizar periferico
-	MENU_flag=1; //actualizar menu
+	//if (!RTTTL_Flag_stop_status()) {
+		RTTTL_play_note(); 
+	//}
 }
 
 void SEOS_Dispatch_Tasks() {
