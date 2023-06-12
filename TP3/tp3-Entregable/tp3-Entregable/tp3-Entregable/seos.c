@@ -63,9 +63,4 @@ void SEOS_Dispatch_Tasks() {
 ISR (TIMER0_COMPA_vect) // ISR para la interrupci�n de comparaci�n del Timer 0
 {
 	SEOS_Schedule_Tasks();
-	if (++contador_UART == 5){
-		
-	}
-
 }
-*/ 

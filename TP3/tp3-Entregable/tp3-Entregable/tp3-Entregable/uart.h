@@ -11,10 +11,10 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdint.h>
+#include "seos.h"
 
-#define FLAG_datos_recibidos 0
-#define RX_BUFFER_LENGTH 100 
-#define TX_BUFFER_LENGTH 100
+#define RX_BUFFER_LENGTH 10 
+#define TX_BUFFER_LENGTH 256
 #define ERROR_UART_FULL_BUFF -1
 #define BR9600 (0x67) //0x67 = 103 -> BAUDRATE = 9600@16MHz
 

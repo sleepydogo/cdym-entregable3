@@ -28,11 +28,12 @@ void MENU_Command_Update(void)
     }
 }
 
-void MENU_Perform_Task(char c)
+/*void MENU_Perform_Task(char c)
 {
     // Echo the menu option
-    UART_Write_Char_To_Buffer(c);
-    UART_Write_Char_To_Buffer( "\n\r");
+    
+	UART_Write_Char_To_Buffer(c);
+    UART_Write_Char_To_Buffer("\n\r");
     switch (c)
     {
     case 'PLAY':
@@ -56,4 +57,4 @@ void MENU_Perform_Task(char c)
 		break;
 	}
     }
-}
+}*/
