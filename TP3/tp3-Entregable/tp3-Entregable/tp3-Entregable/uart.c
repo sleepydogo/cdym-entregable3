@@ -59,13 +59,6 @@ void UART_Update(int * Error_code){
 		FLAG_datos_recibidos = 0;
 		RXindice_escritura = 0;
 	}
-    if (TXindice_lectura < TXindice_escritura) { // Hay byte en el buffer Tx para transmitir?
-        UART_Send_Char(TX_buffer[TXindice_lectura]);
-        TXindice_lectura++;
-    }else{ // No hay datos disponibles para enviar
-        TXindice_lectura = 0;
-        TXindice_escritura = 0;
-    }
 }
 
 // Estas son las funciones que encapsulan el Hardware
@@ -121,15 +114,17 @@ char UART_Receive_data(char *dato){
 }
 
 // Foreground - Consumidor, esperamos a que la tarea de background genere los datos y los transmisitmos
-// ISR(USART_TX_vect) {
-// 	UDR0 = TX_buffer[TXindice_lectura];
-// 	TXindice_lectura++;
-// 	if ((TXindice_lectura == TX_BUFFER_LENGTH) || (TX_buffer[TXindice_lectura] == "\n\r")) {
-// 		TXindice_lectura = 0;
-// 		// TODO: Limpiar el buffer TX...
-// 		UCSR0B &= ~(1<<TXCIE0); // deshabilita la interrupción de transmisión completa en el registro de control de la USART, asegurándose de que el microcontrolador no sea interrumpido cuando se completa la transmisión de datos a través de la USART.
-// 	}
-// }
+ISR(USART_UDRE_vect) {
+	if ((TXindice_lectura < TX_BUFFER_LENGTH) && (TX_buffer[TXindice_lectura] != '\0')) {
+		UART_Send_Char(TX_buffer[TXindice_lectura]);
+		TXindice_lectura++;
+	}
+	else {
+		TXindice_lectura = 0;
+		UART_TX_Interrupt_Disable();
+		UART_RX_Interrupt_Enable();
+	}
+}
 
 // Foreground - Productor
 ISR(USART_RX_vect) {
@@ -140,5 +135,19 @@ ISR(USART_RX_vect) {
 	}else{
 		RX_buffer[RXindice_escritura] = '\0';
 		FLAG_datos_recibidos = 1;
+		UART_RX_Interrupt_Disable();
 	}
-}
+}	
+
+
+// ISR(USART_UDRE_vect){
+// 	if((TXIndex lectura)% TX BUFFER LENGTH == TXIndex_escritura){
+// 		SerialPort_TX_Interrupt_Disable();
+// 		SerialPort_RX_Interrupt_Enable();
+// 	}else{
+// 		if(TX_buffer[TXIndex_lectura] != '\0'){
+// 			SerialPort_Send_Data(TX_buffer[TXIndex_lectura]);
+// 		}
+// 		TXIndex_lectura=(TXIndex_lectura+1)%TX BUFFER LENGTH;
+// 	}
+// }
