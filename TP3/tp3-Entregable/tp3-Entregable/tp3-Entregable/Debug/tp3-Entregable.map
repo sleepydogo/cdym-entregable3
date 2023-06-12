@@ -103,6 +103,10 @@ Discarded input sections
  .bss           0x00000000        0x0 uart.o
  .text.UART_Get_Char_From_Buffer
                 0x00000000       0x32 uart.o
+ .text.UART_TX_Interrupt_Disable
+                0x00000000        0xc uart.o
+ .text.UART_Send_Char
+                0x00000000       0x26 uart.o
  .text.UART_Receive_data
                 0x00000000       0x18 uart.o
  .bss.RXindice_lectura
@@ -324,7 +328,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x39e
+.text           0x00000000      0x384
  *(.vectors)
  .vectors       0x00000000       0x68 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x00000000                __vector_default
@@ -408,64 +412,58 @@ END GROUP
                 0x000000a2                __vector_20
                 0x000000a6                . = ALIGN (0x2)
  *(.text.*)
- .text.main     0x000000a6       0x18 main.o
+ .text.main     0x000000a6       0x14 main.o
                 0x000000a6                main
  .text.MENU_Show_Menu
-                0x000000be       0x2a menu.o
-                0x000000be                MENU_Show_Menu
+                0x000000ba       0x2a menu.o
+                0x000000ba                MENU_Show_Menu
  .text.SEOS_Init_Timer
-                0x000000e8       0x2e seos.o
-                0x000000e8                SEOS_Init_Timer
+                0x000000e4       0x2e seos.o
+                0x000000e4                SEOS_Init_Timer
  .text.SEOS_Schedule_Tasks
-                0x00000116        0xc seos.o
-                0x00000116                SEOS_Schedule_Tasks
+                0x00000112        0xc seos.o
+                0x00000112                SEOS_Schedule_Tasks
  .text.SEOS_Dispatch_Tasks
-                0x00000122       0x16 seos.o
-                0x00000122                SEOS_Dispatch_Tasks
+                0x0000011e       0x16 seos.o
+                0x0000011e                SEOS_Dispatch_Tasks
  .text.__vector_14
-                0x00000138       0x48 seos.o
-                0x00000138                __vector_14
- .text.UART_Write_Char_To_Buffer
-                0x00000180       0x16 uart.o
-                0x00000180                UART_Write_Char_To_Buffer
- .text.UART_Write_String_To_Buffer
-                0x00000196       0x42 uart.o
-                0x00000196                UART_Write_String_To_Buffer
- .text.UART_Update
-                0x000001d8       0x50 uart.o
-                0x000001d8                UART_Update
+                0x00000134       0x48 seos.o
+                0x00000134                __vector_14
  .text.UART_Init
-                0x00000228       0x22 uart.o
-                0x00000228                UART_Init
+                0x0000017c       0x22 uart.o
+                0x0000017c                UART_Init
  .text.UART_TX_Interrupt_Enable
-                0x0000024a        0xc uart.o
-                0x0000024a                UART_TX_Interrupt_Enable
- .text.UART_TX_Interrupt_Disable
-                0x00000256        0xc uart.o
-                0x00000256                UART_TX_Interrupt_Disable
+                0x0000019e        0xc uart.o
+                0x0000019e                UART_TX_Interrupt_Enable
+ .text.UART_Write_Char_To_Buffer
+                0x000001aa       0x1a uart.o
+                0x000001aa                UART_Write_Char_To_Buffer
+ .text.UART_Write_String_To_Buffer
+                0x000001c4       0x42 uart.o
+                0x000001c4                UART_Write_String_To_Buffer
  .text.UART_RX_Interrupt_Enable
-                0x00000262        0xc uart.o
-                0x00000262                UART_RX_Interrupt_Enable
+                0x00000206        0xc uart.o
+                0x00000206                UART_RX_Interrupt_Enable
+ .text.UART_Update
+                0x00000212       0x54 uart.o
+                0x00000212                UART_Update
  .text.UART_RX_Interrupt_Disable
-                0x0000026e        0xc uart.o
-                0x0000026e                UART_RX_Interrupt_Disable
- .text.UART_Send_Char
-                0x0000027a       0x26 uart.o
-                0x0000027a                UART_Send_Char
+                0x00000266        0xc uart.o
+                0x00000266                UART_RX_Interrupt_Disable
  .text.__vector_19
-                0x000002a0       0x70 uart.o
-                0x000002a0                __vector_19
+                0x00000272       0x84 uart.o
+                0x00000272                __vector_19
  .text.__vector_18
-                0x00000310       0x78 uart.o
-                0x00000310                __vector_18
+                0x000002f6       0x78 uart.o
+                0x000002f6                __vector_18
  .text.avr-libc
-                0x00000388       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(memcpy.o)
-                0x00000388                memcpy
-                0x0000039a                . = ALIGN (0x2)
+                0x0000036e       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(memcpy.o)
+                0x0000036e                memcpy
+                0x00000380                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000039a        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x0000039a                _exit
-                0x0000039a                exit
+ .fini9         0x00000380        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x00000380                _exit
+                0x00000380                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -484,11 +482,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000039a        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x00000380        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x0000039e                _etext = .
+                0x00000384                _etext = .
 
-.data           0x00800100       0xdc load address 0x0000039e
+.data           0x00800100       0xdc load address 0x00000384
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -532,8 +530,8 @@ END GROUP
                 0x008001e3                TX_buffer
                 0x008002e3                RX_buffer
                 0x008002ed                PROVIDE (__bss_end, .)
-                0x0000039e                __data_load_start = LOADADDR (.data)
-                0x0000047a                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000384                __data_load_start = LOADADDR (.data)
+                0x00000460                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x008002ed        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -621,29 +619,29 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0xe03
+.debug_info     0x00000000      0xde2
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_info    0x000005f4      0x11b main.o
- .debug_info    0x0000070f      0x186 menu.o
- .debug_info    0x00000895      0x174 seos.o
- .debug_info    0x00000a09      0x3fa uart.o
+ .debug_info    0x000005f4      0x105 main.o
+ .debug_info    0x000006f9      0x186 menu.o
+ .debug_info    0x0000087f      0x174 seos.o
+ .debug_info    0x000009f3      0x3ef uart.o
 
-.debug_abbrev   0x00000000      0x966
+.debug_abbrev   0x00000000      0x95b
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x5a2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_abbrev  0x000005a2       0x9d main.o
  .debug_abbrev  0x0000063f       0xb0 menu.o
  .debug_abbrev  0x000006ef       0xe7 seos.o
- .debug_abbrev  0x000007d6      0x190 uart.o
+ .debug_abbrev  0x000007d6      0x185 uart.o
 
-.debug_line     0x00000000      0x6b9
+.debug_line     0x00000000      0x6bf
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x134 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_line    0x00000134       0xdb main.o
- .debug_line    0x0000020f       0x93 menu.o
- .debug_line    0x000002a2      0x14d seos.o
- .debug_line    0x000003ef      0x2ca uart.o
+ .debug_line    0x00000134       0xd5 main.o
+ .debug_line    0x00000209       0x93 menu.o
+ .debug_line    0x0000029c      0x14d seos.o
+ .debug_line    0x000003e9      0x2d6 uart.o
 
 .debug_frame    0x00000000      0x2b8
  *(.debug_frame)
@@ -655,20 +653,20 @@ END GROUP
 .debug_str      0x00000000      0x5f3
  *(.debug_str)
  .debug_str     0x00000000      0x208 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_str     0x00000208      0x1ae main.o
-                                0x1e7 (size before relaxing)
- .debug_str     0x000003b6       0x68 menu.o
+ .debug_str     0x00000208      0x195 main.o
+                                0x1ce (size before relaxing)
+ .debug_str     0x0000039d       0x68 menu.o
                                 0x1ef (size before relaxing)
- .debug_str     0x0000041e       0x76 seos.o
+ .debug_str     0x00000405       0x76 seos.o
                                 0x215 (size before relaxing)
- .debug_str     0x00000494      0x15f uart.o
+ .debug_str     0x0000047b      0x178 uart.o
                                 0x349 (size before relaxing)
 
-.debug_loc      0x00000000      0x4d4
+.debug_loc      0x00000000      0x51b
  *(.debug_loc)
  .debug_loc     0x00000000       0x48 menu.o
  .debug_loc     0x00000048       0xcb seos.o
- .debug_loc     0x00000113      0x3c1 uart.o
+ .debug_loc     0x00000113      0x408 uart.o
 
 .debug_macinfo
  *(.debug_macinfo)

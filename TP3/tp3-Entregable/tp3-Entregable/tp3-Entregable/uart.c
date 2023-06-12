@@ -19,10 +19,12 @@ void UART_Write_Char_To_Buffer (const char data, int * Error_code){
 	if (TXindice_escritura < TX_BUFFER_LENGTH){ 
 		TX_buffer [TXindice_escritura] = data;
 		TXindice_escritura++;
+		UART_TX_Interrupt_Enable();
 	}else{ 
 		// Write buffer is full
 		*Error_code = ERROR_UART_FULL_BUFF;
 	}
+	
 }
 
 void UART_Write_String_To_Buffer(const char* STR_PTR){
@@ -50,12 +52,12 @@ char UART_Get_Char_From_Buffer(char *ch){
 }
 
 void UART_Update(int * Error_code){
-    char dato;
+    UART_RX_Interrupt_Enable();
 	
 	if (FLAG_datos_recibidos) {
 		char comando[20];
 		memcpy(comando, RX_buffer, RXindice_escritura);
-		UART_Write_String_To_Buffer(RX_buffer);
+		UART_Write_String_To_Buffer(comando);
 		FLAG_datos_recibidos = 0;
 		RXindice_escritura = 0;
 	}
@@ -90,7 +92,7 @@ void UART_RX_Interrupt_Enable(void){
 }
 
 void UART_RX_Interrupt_Disable(void){
-	UCSR0B |= ~(1<<RXCIE0);
+	UCSR0B &= ~(1<<RXCIE0);
 }
 
 void UART_Send_Char (char dato)
@@ -115,14 +117,17 @@ char UART_Receive_data(char *dato){
 
 // Foreground - Consumidor, esperamos a que la tarea de background genere los datos y los transmisitmos
 ISR(USART_UDRE_vect) {
-	if ((TXindice_lectura < TX_BUFFER_LENGTH) && (TX_buffer[TXindice_lectura] != '\0')) {
-		UART_Send_Char(TX_buffer[TXindice_lectura]);
-		TXindice_lectura++;
-	}
-	else {
-		TXindice_lectura = 0;
-		UART_TX_Interrupt_Disable();
-		UART_RX_Interrupt_Enable();
+	if (TXindice_lectura == TXindice_escritura) {
+		// Se han transmitido todos los datos en el buffer
+		UCSR0B &= ~(1 << UDRIE0);  // Deshabilitar la interrupción de registro de datos vacío
+		} else {
+		if (TX_buffer[TXindice_lectura] != '\0') {
+			UDR0 = TX_buffer[TXindice_lectura++];  // Enviar el siguiente carácter del buffer
+			} else {
+			// Fin de mensaje (carácter nulo '\0')
+			UCSR0B &= ~(1 << UDRIE0);  // Deshabilitar la interrupción de registro de datos vacío
+			UART_RX_Interrupt_Enable();  // Habilitar interrupción de recepción USART
+		}
 	}
 }
 
@@ -138,16 +143,3 @@ ISR(USART_RX_vect) {
 		UART_RX_Interrupt_Disable();
 	}
 }	
-
-
-// ISR(USART_UDRE_vect){
-// 	if((TXIndex lectura)% TX BUFFER LENGTH == TXIndex_escritura){
-// 		SerialPort_TX_Interrupt_Disable();
-// 		SerialPort_RX_Interrupt_Enable();
-// 	}else{
-// 		if(TX_buffer[TXIndex_lectura] != '\0'){
-// 			SerialPort_Send_Data(TX_buffer[TXIndex_lectura]);
-// 		}
-// 		TXIndex_lectura=(TXIndex_lectura+1)%TX BUFFER LENGTH;
-// 	}
-// }
