@@ -24,6 +24,7 @@
 void MENU_Show_Menu(void);
 void MENU_Command_Update(const char * RX_buffer);
 void MENU_Perform_Task();
+int compareCommand(const char* str1, const char* str2);
 
 
 #endif /* MENU_H_ */

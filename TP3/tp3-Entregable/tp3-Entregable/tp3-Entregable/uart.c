@@ -8,6 +8,7 @@
 #include "uart.h"
 
 uint8_t FLAG_datos_recibidos = 0;
+uint8_t FLAG_errorBuffer = 0;
 uint8_t auxe = 0;
 char RX_buffer[RX_BUFFER_LENGTH];
 char TX_buffer[TX_BUFFER_LENGTH];
@@ -74,7 +75,6 @@ void UART_Send_Char (char dato)
 	else {
 		
 	}
-	return 0;
 }
 
 char UART_Receive_data(char *dato){
@@ -107,8 +107,7 @@ void UART_RX_Interrupt_Disable(void){
 void UART_Update(int * Error_code){
     UART_RX_Interrupt_Enable();
 	if (FLAG_datos_recibidos) {
-		UART_Write_String_To_Buffer(RX_buffer);
-		MENU_Command_Update(&RX_buffer, RXindice_escritura);
+		MENU_Command_Update(RX_buffer);
 		RXindice_escritura = 0;
 		FLAG_datos_recibidos = 0;
 	}
@@ -133,11 +132,18 @@ ISR(USART_UDRE_vect) {
 // Foreground - Productor
 ISR(USART_RX_vect) {
 	char aux = UDR0;
-	if ((aux != '\r') && (RXindice_escritura<RX_BUFFER_LENGTH)){
+	if ((aux != '\r') && (aux != '\n')){
 		RX_buffer[RXindice_escritura] = aux;
 		RXindice_escritura++;
 	}else{
-		FLAG_datos_recibidos = 1;
-		UART_RX_Interrupt_Disable();
+		if (aux == '\r'){
+			RX_buffer[RXindice_escritura] = '\0';
+			RXindice_escritura++;
+		}
+		if (aux == '\n'){
+			FLAG_datos_recibidos = 1;
+			UART_RX_Interrupt_Disable();			
+		}
 	}
+	UART_Write_Char_To_Buffer(aux,FLAG_errorBuffer);
 }	

@@ -19,47 +19,59 @@ void MENU_Show_Menu(void)
     UART_Write_String_To_Buffer("	* RESET: reinicia el sistema al estado inicial\n\r");
 }
  
-void MENU_Command_Update(const char * RX_buffer)
+void MENU_Command_Update(const char* RX_buffer)
 {
-	char comando[10];
-	memcpy(comando, RX_buffer, 10);
-	if (!strcmp(RX_buffer,"PLAY")) SystemState = ESTADO_PLAY;
-	else if (!strcmp(RX_buffer,"STOP")) SystemState = ESTADO_STOP;
-	else if (!strcmp(RX_buffer,"NUM")) SystemState = ESTADO_NUM;
-	else if (!strcmp(RX_buffer,"RESET")) SystemState = ESTADO_RESET;
+	if (compareCommand(RX_buffer, "PLAY"))
+	SystemState = ESTADO_PLAY;
+	else if (compareCommand(RX_buffer, "STOP"))
+	SystemState = ESTADO_STOP;
+	else if (compareCommand(RX_buffer, "NUM "))
+	SystemState = ESTADO_NUM;
+	else if (compareCommand(RX_buffer, "RESET"))
+	SystemState = ESTADO_RESET;
 	else {
-		UART_Write_String_To_Buffer("\n	Comando no valido.\n\r");
+		UART_Write_String_To_Buffer("Comando no valido.\r\n");
 	}
-	UART_Write_String_To_Buffer(comando);
+}
+
+int compareCommand(const char* str1, const char* str2)
+{
+	int i = 0;
+	while (str1[i] != '\0' && str2[i] != '\0') {
+		if (str1[i] != str2[i])
+		return 0;
+		i++;
+	}
+	return (str1[i] == '\0' && str2[i] == '\0');
 }
 
 void MENU_Perform_Task()
 {
-    switch (SystemState)
-    {
-    case ESTADO_PLAY:
-    {
-        UART_Write_String_To_Buffer("\n	Estado play\n\r");
-		SystemState = -1;
-		break;
-    }
-    case ESTADO_STOP:
-    {
-		UART_Write_String_To_Buffer("\n	estado stop\n\r");
-		SystemState = -1;
-        break;
-    }
-	case ESTADO_NUM:
+	switch (SystemState)
 	{
-		UART_Write_String_To_Buffer("\n	estado num \n\r");
-		SystemState = -1;
-		break;
+		case ESTADO_PLAY:
+		{
+			UART_Write_String_To_Buffer("Estado PLAY\r\n");
+			SystemState = -1;
+			break;
+		}
+		case ESTADO_STOP:
+		{
+			UART_Write_String_To_Buffer("Estado STOP\r\n");
+			SystemState = -1;
+			break;
+		}
+		case ESTADO_NUM:
+		{
+			UART_Write_String_To_Buffer("Estado NUM\r\n");
+			SystemState = -1;
+			break;
+		}
+		case ESTADO_RESET:
+		{
+			UART_Write_String_To_Buffer("Estado RESET\r\n");
+			SystemState = -1;
+			break;
+		}
 	}
-	case ESTADO_RESET:
-	{
-		UART_Write_String_To_Buffer("\n	estado reset.\n\r");
-		SystemState = -1;
-		break;
-	}
-    }
 }

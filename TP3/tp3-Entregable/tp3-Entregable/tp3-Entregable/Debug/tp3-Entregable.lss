@@ -3,31 +3,31 @@ tp3-Entregable.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         0000014a  00800100  00000466  000004fa  2**0
+  0 .data         00000140  00800100  0000048c  00000520  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000466  00000000  00000000  00000094  2**1
+  1 .text         0000048c  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000112  0080024a  0080024a  00000644  2**0
+  2 .bss          00000209  00800240  00800240  00000660  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00000644  2**0
+  3 .comment      00000030  00000000  00000000  00000660  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000674  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000690  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000110  00000000  00000000  000006b4  2**0
+  5 .debug_aranges 00000118  00000000  00000000  000006d0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000f69  00000000  00000000  000007c4  2**0
+  6 .debug_info   00000f3f  00000000  00000000  000007e8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000009d8  00000000  00000000  0000172d  2**0
+  7 .debug_abbrev 000009af  00000000  00000000  00001727  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000779  00000000  00000000  00002105  2**0
+  8 .debug_line   0000081f  00000000  00000000  000020d6  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000002c4  00000000  00000000  00002880  2**2
+  9 .debug_frame  000002d4  00000000  00000000  000028f8  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000604  00000000  00000000  00002b44  2**0
+ 10 .debug_str    0000061a  00000000  00000000  00002bcc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000523  00000000  00000000  00003148  2**0
+ 11 .debug_loc    000005c7  00000000  00000000  000031e6  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000000d0  00000000  00000000  0000366b  2**0
+ 12 .debug_ranges 000000d8  00000000  00000000  000037ad  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -47,12 +47,12 @@ Disassembly of section .text:
   2c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   30:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   34:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
-  38:	0c 94 1d 01 	jmp	0x23a	; 0x23a <__vector_14>
+  38:	0c 94 2a 01 	jmp	0x254	; 0x254 <__vector_14>
   3c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   40:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   44:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
-  48:	0c 94 f0 01 	jmp	0x3e0	; 0x3e0 <__vector_18>
-  4c:	0c 94 ae 01 	jmp	0x35c	; 0x35c <__vector_19>
+  48:	0c 94 f6 01 	jmp	0x3ec	; 0x3ec <__vector_18>
+  4c:	0c 94 b4 01 	jmp	0x368	; 0x368 <__vector_19>
   50:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   54:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   58:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
@@ -72,18 +72,18 @@ Disassembly of section .text:
   74:	12 e0       	ldi	r17, 0x02	; 2
   76:	a0 e0       	ldi	r26, 0x00	; 0
   78:	b1 e0       	ldi	r27, 0x01	; 1
-  7a:	e6 e6       	ldi	r30, 0x66	; 102
+  7a:	ec e8       	ldi	r30, 0x8C	; 140
   7c:	f4 e0       	ldi	r31, 0x04	; 4
   7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
   80:	05 90       	lpm	r0, Z+
   82:	0d 92       	st	X+, r0
-  84:	aa 34       	cpi	r26, 0x4A	; 74
+  84:	a0 34       	cpi	r26, 0x40	; 64
   86:	b1 07       	cpc	r27, r17
   88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
 
 0000008a <__do_clear_bss>:
-  8a:	23 e0       	ldi	r18, 0x03	; 3
-  8c:	aa e4       	ldi	r26, 0x4A	; 74
+  8a:	24 e0       	ldi	r18, 0x04	; 4
+  8c:	a0 e4       	ldi	r26, 0x40	; 64
   8e:	b2 e0       	ldi	r27, 0x02	; 2
   90:	01 c0       	rjmp	.+2      	; 0x94 <.do_clear_bss_start>
 
@@ -91,11 +91,11 @@ Disassembly of section .text:
   92:	1d 92       	st	X+, r1
 
 00000094 <.do_clear_bss_start>:
-  94:	ac 35       	cpi	r26, 0x5C	; 92
+  94:	a9 34       	cpi	r26, 0x49	; 73
   96:	b2 07       	cpc	r27, r18
   98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
   9a:	0e 94 53 00 	call	0xa6	; 0xa6 <main>
-  9e:	0c 94 31 02 	jmp	0x462	; 0x462 <_exit>
+  9e:	0c 94 44 02 	jmp	0x488	; 0x488 <_exit>
 
 000000a2 <__bad_interrupt>:
   a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -108,17 +108,17 @@ void main(void){
 	// Set baud rate to 9600
 	UART_Init(BR9600);
   a6:	87 e6       	ldi	r24, 0x67	; 103
-  a8:	0e 94 41 01 	call	0x282	; 0x282 <UART_Init>
+  a8:	0e 94 4e 01 	call	0x29c	; 0x29c <UART_Init>
 	
 	MENU_Show_Menu();
   ac:	0e 94 5d 00 	call	0xba	; 0xba <MENU_Show_Menu>
 	
 	SEOS_Init_Timer();	
-  b0:	0e 94 f3 00 	call	0x1e6	; 0x1e6 <SEOS_Init_Timer>
+  b0:	0e 94 00 01 	call	0x200	; 0x200 <SEOS_Init_Timer>
 	
 	while (1){
 		SEOS_Dispatch_Tasks();
-  b4:	0e 94 10 01 	call	0x220	; 0x220 <SEOS_Dispatch_Tasks>
+  b4:	0e 94 1d 01 	call	0x23a	; 0x23a <SEOS_Dispatch_Tasks>
   b8:	fd cf       	rjmp	.-6      	; 0xb4 <main+0xe>
 
 000000ba <MENU_Show_Menu>:
@@ -130,640 +130,702 @@ void MENU_Show_Menu(void)
  	UART_Write_String_To_Buffer("Menu:\n\r");
   ba:	80 e0       	ldi	r24, 0x00	; 0
   bc:	91 e0       	ldi	r25, 0x01	; 1
-  be:	0e 94 65 01 	call	0x2ca	; 0x2ca <UART_Write_String_To_Buffer>
+  be:	0e 94 72 01 	call	0x2e4	; 0x2e4 <UART_Write_String_To_Buffer>
     UART_Write_String_To_Buffer("	* PLAY: reproduce la cancion seleccionada\n\r");
   c2:	88 e0       	ldi	r24, 0x08	; 8
   c4:	91 e0       	ldi	r25, 0x01	; 1
-  c6:	0e 94 65 01 	call	0x2ca	; 0x2ca <UART_Write_String_To_Buffer>
+  c6:	0e 94 72 01 	call	0x2e4	; 0x2e4 <UART_Write_String_To_Buffer>
     UART_Write_String_To_Buffer("	* STOP: detiene la reproduccion del sonido en curso\n\r");
   ca:	85 e3       	ldi	r24, 0x35	; 53
   cc:	91 e0       	ldi	r25, 0x01	; 1
-  ce:	0e 94 65 01 	call	0x2ca	; 0x2ca <UART_Write_String_To_Buffer>
+  ce:	0e 94 72 01 	call	0x2e4	; 0x2e4 <UART_Write_String_To_Buffer>
     UART_Write_String_To_Buffer("	* NUM: numero de cancion a seleccionar de la lista [1 a N]\n\r");
   d2:	8c e6       	ldi	r24, 0x6C	; 108
   d4:	91 e0       	ldi	r25, 0x01	; 1
-  d6:	0e 94 65 01 	call	0x2ca	; 0x2ca <UART_Write_String_To_Buffer>
+  d6:	0e 94 72 01 	call	0x2e4	; 0x2e4 <UART_Write_String_To_Buffer>
     UART_Write_String_To_Buffer("	* RESET: reinicia el sistema al estado inicial\n\r");
   da:	8a ea       	ldi	r24, 0xAA	; 170
   dc:	91 e0       	ldi	r25, 0x01	; 1
-  de:	0e 94 65 01 	call	0x2ca	; 0x2ca <UART_Write_String_To_Buffer>
+  de:	0e 94 72 01 	call	0x2e4	; 0x2e4 <UART_Write_String_To_Buffer>
   e2:	08 95       	ret
 
-000000e4 <MENU_Command_Update>:
+000000e4 <compareCommand>:
+		UART_Write_String_To_Buffer("Comando no valido.\r\n");
+	}
+}
+
+int compareCommand(const char* str1, const char* str2)
+{
+  e4:	cf 93       	push	r28
+  e6:	df 93       	push	r29
+  e8:	ec 01       	movw	r28, r24
+	int i = 0;
+  ea:	20 e0       	ldi	r18, 0x00	; 0
+  ec:	30 e0       	ldi	r19, 0x00	; 0
+	while (str1[i] != '\0' && str2[i] != '\0') {
+  ee:	04 c0       	rjmp	.+8      	; 0xf8 <compareCommand+0x14>
+		if (str1[i] != str2[i])
+  f0:	94 13       	cpse	r25, r20
+  f2:	19 c0       	rjmp	.+50     	; 0x126 <compareCommand+0x42>
+		return 0;
+		i++;
+  f4:	2f 5f       	subi	r18, 0xFF	; 255
+  f6:	3f 4f       	sbci	r19, 0xFF	; 255
+}
+
+int compareCommand(const char* str1, const char* str2)
+{
+	int i = 0;
+	while (str1[i] != '\0' && str2[i] != '\0') {
+  f8:	d9 01       	movw	r26, r18
+  fa:	fe 01       	movw	r30, r28
+  fc:	e2 0f       	add	r30, r18
+  fe:	f3 1f       	adc	r31, r19
+ 100:	90 81       	ld	r25, Z
+ 102:	99 23       	and	r25, r25
+ 104:	31 f0       	breq	.+12     	; 0x112 <compareCommand+0x2e>
+ 106:	fb 01       	movw	r30, r22
+ 108:	e2 0f       	add	r30, r18
+ 10a:	f3 1f       	adc	r31, r19
+ 10c:	40 81       	ld	r20, Z
+ 10e:	41 11       	cpse	r20, r1
+ 110:	ef cf       	rjmp	.-34     	; 0xf0 <compareCommand+0xc>
+		if (str1[i] != str2[i])
+		return 0;
+		i++;
+	}
+	return (str1[i] == '\0' && str2[i] == '\0');
+ 112:	91 11       	cpse	r25, r1
+ 114:	0b c0       	rjmp	.+22     	; 0x12c <compareCommand+0x48>
+ 116:	a6 0f       	add	r26, r22
+ 118:	b7 1f       	adc	r27, r23
+ 11a:	8c 91       	ld	r24, X
+ 11c:	88 23       	and	r24, r24
+ 11e:	49 f0       	breq	.+18     	; 0x132 <compareCommand+0x4e>
+ 120:	80 e0       	ldi	r24, 0x00	; 0
+ 122:	90 e0       	ldi	r25, 0x00	; 0
+ 124:	08 c0       	rjmp	.+16     	; 0x136 <compareCommand+0x52>
+int compareCommand(const char* str1, const char* str2)
+{
+	int i = 0;
+	while (str1[i] != '\0' && str2[i] != '\0') {
+		if (str1[i] != str2[i])
+		return 0;
+ 126:	80 e0       	ldi	r24, 0x00	; 0
+ 128:	90 e0       	ldi	r25, 0x00	; 0
+ 12a:	05 c0       	rjmp	.+10     	; 0x136 <compareCommand+0x52>
+		i++;
+	}
+	return (str1[i] == '\0' && str2[i] == '\0');
+ 12c:	80 e0       	ldi	r24, 0x00	; 0
+ 12e:	90 e0       	ldi	r25, 0x00	; 0
+ 130:	02 c0       	rjmp	.+4      	; 0x136 <compareCommand+0x52>
+ 132:	81 e0       	ldi	r24, 0x01	; 1
+ 134:	90 e0       	ldi	r25, 0x00	; 0
+}
+ 136:	df 91       	pop	r29
+ 138:	cf 91       	pop	r28
+ 13a:	08 95       	ret
+
+0000013c <MENU_Command_Update>:
+    UART_Write_String_To_Buffer("	* NUM: numero de cancion a seleccionar de la lista [1 a N]\n\r");
+    UART_Write_String_To_Buffer("	* RESET: reinicia el sistema al estado inicial\n\r");
 }
  
-void MENU_Command_Update(const char * RX_buffer)
+void MENU_Command_Update(const char* RX_buffer)
 {
-  e4:	0f 93       	push	r16
-  e6:	1f 93       	push	r17
-  e8:	cf 93       	push	r28
-  ea:	df 93       	push	r29
-  ec:	cd b7       	in	r28, 0x3d	; 61
-  ee:	de b7       	in	r29, 0x3e	; 62
-  f0:	2a 97       	sbiw	r28, 0x0a	; 10
-  f2:	0f b6       	in	r0, 0x3f	; 63
-  f4:	f8 94       	cli
-  f6:	de bf       	out	0x3e, r29	; 62
-  f8:	0f be       	out	0x3f, r0	; 63
-  fa:	cd bf       	out	0x3d, r28	; 61
-  fc:	8c 01       	movw	r16, r24
-	char comando[10];
-	memcpy(comando, RX_buffer, 10);
-  fe:	8a e0       	ldi	r24, 0x0A	; 10
- 100:	f8 01       	movw	r30, r16
- 102:	de 01       	movw	r26, r28
- 104:	11 96       	adiw	r26, 0x01	; 1
- 106:	01 90       	ld	r0, Z+
- 108:	0d 92       	st	X+, r0
- 10a:	8a 95       	dec	r24
- 10c:	e1 f7       	brne	.-8      	; 0x106 <MENU_Command_Update+0x22>
-	if (!strcmp(RX_buffer,"PLAY")) SystemState = ESTADO_PLAY;
- 10e:	6c ed       	ldi	r22, 0xDC	; 220
- 110:	71 e0       	ldi	r23, 0x01	; 1
- 112:	c8 01       	movw	r24, r16
- 114:	0e 94 28 02 	call	0x450	; 0x450 <strcmp>
- 118:	89 2b       	or	r24, r25
- 11a:	21 f4       	brne	.+8      	; 0x124 <MENU_Command_Update+0x40>
- 11c:	81 e0       	ldi	r24, 0x01	; 1
- 11e:	80 93 4a 02 	sts	0x024A, r24	; 0x80024a <__data_end>
- 122:	25 c0       	rjmp	.+74     	; 0x16e <MENU_Command_Update+0x8a>
-	else if (!strcmp(RX_buffer,"STOP")) SystemState = ESTADO_STOP;
- 124:	61 ee       	ldi	r22, 0xE1	; 225
- 126:	71 e0       	ldi	r23, 0x01	; 1
- 128:	c8 01       	movw	r24, r16
- 12a:	0e 94 28 02 	call	0x450	; 0x450 <strcmp>
- 12e:	89 2b       	or	r24, r25
- 130:	21 f4       	brne	.+8      	; 0x13a <MENU_Command_Update+0x56>
- 132:	82 e0       	ldi	r24, 0x02	; 2
- 134:	80 93 4a 02 	sts	0x024A, r24	; 0x80024a <__data_end>
- 138:	1a c0       	rjmp	.+52     	; 0x16e <MENU_Command_Update+0x8a>
-	else if (!strcmp(RX_buffer,"NUM")) SystemState = ESTADO_NUM;
- 13a:	66 ee       	ldi	r22, 0xE6	; 230
- 13c:	71 e0       	ldi	r23, 0x01	; 1
- 13e:	c8 01       	movw	r24, r16
- 140:	0e 94 28 02 	call	0x450	; 0x450 <strcmp>
- 144:	89 2b       	or	r24, r25
- 146:	21 f4       	brne	.+8      	; 0x150 <MENU_Command_Update+0x6c>
- 148:	83 e0       	ldi	r24, 0x03	; 3
- 14a:	80 93 4a 02 	sts	0x024A, r24	; 0x80024a <__data_end>
- 14e:	0f c0       	rjmp	.+30     	; 0x16e <MENU_Command_Update+0x8a>
-	else if (!strcmp(RX_buffer,"RESET")) SystemState = ESTADO_RESET;
- 150:	6a ee       	ldi	r22, 0xEA	; 234
- 152:	71 e0       	ldi	r23, 0x01	; 1
- 154:	c8 01       	movw	r24, r16
- 156:	0e 94 28 02 	call	0x450	; 0x450 <strcmp>
- 15a:	89 2b       	or	r24, r25
- 15c:	21 f4       	brne	.+8      	; 0x166 <MENU_Command_Update+0x82>
- 15e:	84 e0       	ldi	r24, 0x04	; 4
- 160:	80 93 4a 02 	sts	0x024A, r24	; 0x80024a <__data_end>
- 164:	04 c0       	rjmp	.+8      	; 0x16e <MENU_Command_Update+0x8a>
+ 13c:	cf 93       	push	r28
+ 13e:	df 93       	push	r29
+ 140:	ec 01       	movw	r28, r24
+	if (compareCommand(RX_buffer, "PLAY"))
+ 142:	6c ed       	ldi	r22, 0xDC	; 220
+ 144:	71 e0       	ldi	r23, 0x01	; 1
+ 146:	0e 94 72 00 	call	0xe4	; 0xe4 <compareCommand>
+ 14a:	89 2b       	or	r24, r25
+ 14c:	21 f0       	breq	.+8      	; 0x156 <MENU_Command_Update+0x1a>
+	SystemState = ESTADO_PLAY;
+ 14e:	81 e0       	ldi	r24, 0x01	; 1
+ 150:	80 93 40 02 	sts	0x0240, r24	; 0x800240 <__data_end>
+ 154:	25 c0       	rjmp	.+74     	; 0x1a0 <MENU_Command_Update+0x64>
+	else if (compareCommand(RX_buffer, "STOP"))
+ 156:	61 ee       	ldi	r22, 0xE1	; 225
+ 158:	71 e0       	ldi	r23, 0x01	; 1
+ 15a:	ce 01       	movw	r24, r28
+ 15c:	0e 94 72 00 	call	0xe4	; 0xe4 <compareCommand>
+ 160:	89 2b       	or	r24, r25
+ 162:	21 f0       	breq	.+8      	; 0x16c <MENU_Command_Update+0x30>
+	SystemState = ESTADO_STOP;
+ 164:	82 e0       	ldi	r24, 0x02	; 2
+ 166:	80 93 40 02 	sts	0x0240, r24	; 0x800240 <__data_end>
+ 16a:	1a c0       	rjmp	.+52     	; 0x1a0 <MENU_Command_Update+0x64>
+	else if (compareCommand(RX_buffer, "NUM"))
+ 16c:	66 ee       	ldi	r22, 0xE6	; 230
+ 16e:	71 e0       	ldi	r23, 0x01	; 1
+ 170:	ce 01       	movw	r24, r28
+ 172:	0e 94 72 00 	call	0xe4	; 0xe4 <compareCommand>
+ 176:	89 2b       	or	r24, r25
+ 178:	21 f0       	breq	.+8      	; 0x182 <MENU_Command_Update+0x46>
+	SystemState = ESTADO_NUM;
+ 17a:	83 e0       	ldi	r24, 0x03	; 3
+ 17c:	80 93 40 02 	sts	0x0240, r24	; 0x800240 <__data_end>
+ 180:	0f c0       	rjmp	.+30     	; 0x1a0 <MENU_Command_Update+0x64>
+	else if (compareCommand(RX_buffer, "RESET"))
+ 182:	6a ee       	ldi	r22, 0xEA	; 234
+ 184:	71 e0       	ldi	r23, 0x01	; 1
+ 186:	ce 01       	movw	r24, r28
+ 188:	0e 94 72 00 	call	0xe4	; 0xe4 <compareCommand>
+ 18c:	89 2b       	or	r24, r25
+ 18e:	21 f0       	breq	.+8      	; 0x198 <MENU_Command_Update+0x5c>
+	SystemState = ESTADO_RESET;
+ 190:	84 e0       	ldi	r24, 0x04	; 4
+ 192:	80 93 40 02 	sts	0x0240, r24	; 0x800240 <__data_end>
+ 196:	04 c0       	rjmp	.+8      	; 0x1a0 <MENU_Command_Update+0x64>
 	else {
-		UART_Write_String_To_Buffer("\n	Comando no valido.\n\r");
- 166:	80 ef       	ldi	r24, 0xF0	; 240
- 168:	91 e0       	ldi	r25, 0x01	; 1
- 16a:	0e 94 65 01 	call	0x2ca	; 0x2ca <UART_Write_String_To_Buffer>
+		UART_Write_String_To_Buffer("Comando no valido.\r\n");
+ 198:	80 ef       	ldi	r24, 0xF0	; 240
+ 19a:	91 e0       	ldi	r25, 0x01	; 1
+ 19c:	0e 94 72 01 	call	0x2e4	; 0x2e4 <UART_Write_String_To_Buffer>
 	}
-	UART_Write_String_To_Buffer(comando);
- 16e:	ce 01       	movw	r24, r28
- 170:	01 96       	adiw	r24, 0x01	; 1
- 172:	0e 94 65 01 	call	0x2ca	; 0x2ca <UART_Write_String_To_Buffer>
 }
- 176:	2a 96       	adiw	r28, 0x0a	; 10
- 178:	0f b6       	in	r0, 0x3f	; 63
- 17a:	f8 94       	cli
- 17c:	de bf       	out	0x3e, r29	; 62
- 17e:	0f be       	out	0x3f, r0	; 63
- 180:	cd bf       	out	0x3d, r28	; 61
- 182:	df 91       	pop	r29
- 184:	cf 91       	pop	r28
- 186:	1f 91       	pop	r17
- 188:	0f 91       	pop	r16
- 18a:	08 95       	ret
+ 1a0:	df 91       	pop	r29
+ 1a2:	cf 91       	pop	r28
+ 1a4:	08 95       	ret
 
-0000018c <MENU_Perform_Task>:
+000001a6 <MENU_Perform_Task>:
+	return (str1[i] == '\0' && str2[i] == '\0');
+}
 
 void MENU_Perform_Task()
 {
-    switch (SystemState)
- 18c:	80 91 4a 02 	lds	r24, 0x024A	; 0x80024a <__data_end>
- 190:	82 30       	cpi	r24, 0x02	; 2
- 192:	89 f0       	breq	.+34     	; 0x1b6 <MENU_Perform_Task+0x2a>
- 194:	18 f4       	brcc	.+6      	; 0x19c <MENU_Perform_Task+0x10>
- 196:	81 30       	cpi	r24, 0x01	; 1
- 198:	31 f0       	breq	.+12     	; 0x1a6 <MENU_Perform_Task+0x1a>
- 19a:	08 95       	ret
- 19c:	83 30       	cpi	r24, 0x03	; 3
- 19e:	99 f0       	breq	.+38     	; 0x1c6 <MENU_Perform_Task+0x3a>
- 1a0:	84 30       	cpi	r24, 0x04	; 4
- 1a2:	c9 f0       	breq	.+50     	; 0x1d6 <MENU_Perform_Task+0x4a>
- 1a4:	08 95       	ret
-    {
-    case ESTADO_PLAY:
-    {
-        UART_Write_String_To_Buffer("\n	Estado play\n\r");
- 1a6:	87 e0       	ldi	r24, 0x07	; 7
- 1a8:	92 e0       	ldi	r25, 0x02	; 2
- 1aa:	0e 94 65 01 	call	0x2ca	; 0x2ca <UART_Write_String_To_Buffer>
-		SystemState = -1;
- 1ae:	8f ef       	ldi	r24, 0xFF	; 255
- 1b0:	80 93 4a 02 	sts	0x024A, r24	; 0x80024a <__data_end>
-		break;
+	switch (SystemState)
+ 1a6:	80 91 40 02 	lds	r24, 0x0240	; 0x800240 <__data_end>
+ 1aa:	82 30       	cpi	r24, 0x02	; 2
+ 1ac:	89 f0       	breq	.+34     	; 0x1d0 <MENU_Perform_Task+0x2a>
+ 1ae:	18 f4       	brcc	.+6      	; 0x1b6 <MENU_Perform_Task+0x10>
+ 1b0:	81 30       	cpi	r24, 0x01	; 1
+ 1b2:	31 f0       	breq	.+12     	; 0x1c0 <MENU_Perform_Task+0x1a>
  1b4:	08 95       	ret
-    }
-    case ESTADO_STOP:
-    {
-		UART_Write_String_To_Buffer("\n	estado stop\n\r");
- 1b6:	87 e1       	ldi	r24, 0x17	; 23
- 1b8:	92 e0       	ldi	r25, 0x02	; 2
- 1ba:	0e 94 65 01 	call	0x2ca	; 0x2ca <UART_Write_String_To_Buffer>
-		SystemState = -1;
- 1be:	8f ef       	ldi	r24, 0xFF	; 255
- 1c0:	80 93 4a 02 	sts	0x024A, r24	; 0x80024a <__data_end>
-        break;
- 1c4:	08 95       	ret
-    }
-	case ESTADO_NUM:
+ 1b6:	83 30       	cpi	r24, 0x03	; 3
+ 1b8:	99 f0       	breq	.+38     	; 0x1e0 <MENU_Perform_Task+0x3a>
+ 1ba:	84 30       	cpi	r24, 0x04	; 4
+ 1bc:	c9 f0       	breq	.+50     	; 0x1f0 <MENU_Perform_Task+0x4a>
+ 1be:	08 95       	ret
 	{
-		UART_Write_String_To_Buffer("\n	estado num \n\r");
- 1c6:	87 e2       	ldi	r24, 0x27	; 39
- 1c8:	92 e0       	ldi	r25, 0x02	; 2
- 1ca:	0e 94 65 01 	call	0x2ca	; 0x2ca <UART_Write_String_To_Buffer>
-		SystemState = -1;
- 1ce:	8f ef       	ldi	r24, 0xFF	; 255
- 1d0:	80 93 4a 02 	sts	0x024A, r24	; 0x80024a <__data_end>
-		break;
- 1d4:	08 95       	ret
-	}
-	case ESTADO_RESET:
-	{
-		UART_Write_String_To_Buffer("\n	estado reset.\n\r");
- 1d6:	87 e3       	ldi	r24, 0x37	; 55
- 1d8:	92 e0       	ldi	r25, 0x02	; 2
- 1da:	0e 94 65 01 	call	0x2ca	; 0x2ca <UART_Write_String_To_Buffer>
-		SystemState = -1;
- 1de:	8f ef       	ldi	r24, 0xFF	; 255
- 1e0:	80 93 4a 02 	sts	0x024A, r24	; 0x80024a <__data_end>
- 1e4:	08 95       	ret
+		case ESTADO_PLAY:
+		{
+			UART_Write_String_To_Buffer("Estado play\r\n");
+ 1c0:	85 e0       	ldi	r24, 0x05	; 5
+ 1c2:	92 e0       	ldi	r25, 0x02	; 2
+ 1c4:	0e 94 72 01 	call	0x2e4	; 0x2e4 <UART_Write_String_To_Buffer>
+			SystemState = -1;
+ 1c8:	8f ef       	ldi	r24, 0xFF	; 255
+ 1ca:	80 93 40 02 	sts	0x0240, r24	; 0x800240 <__data_end>
+			break;
+ 1ce:	08 95       	ret
+		}
+		case ESTADO_STOP:
+		{
+			UART_Write_String_To_Buffer("Estado stop\r\n");
+ 1d0:	83 e1       	ldi	r24, 0x13	; 19
+ 1d2:	92 e0       	ldi	r25, 0x02	; 2
+ 1d4:	0e 94 72 01 	call	0x2e4	; 0x2e4 <UART_Write_String_To_Buffer>
+			SystemState = -1;
+ 1d8:	8f ef       	ldi	r24, 0xFF	; 255
+ 1da:	80 93 40 02 	sts	0x0240, r24	; 0x800240 <__data_end>
+			break;
+ 1de:	08 95       	ret
+		}
+		case ESTADO_NUM:
+		{
+			UART_Write_String_To_Buffer("Estado num \r\n");
+ 1e0:	81 e2       	ldi	r24, 0x21	; 33
+ 1e2:	92 e0       	ldi	r25, 0x02	; 2
+ 1e4:	0e 94 72 01 	call	0x2e4	; 0x2e4 <UART_Write_String_To_Buffer>
+			SystemState = -1;
+ 1e8:	8f ef       	ldi	r24, 0xFF	; 255
+ 1ea:	80 93 40 02 	sts	0x0240, r24	; 0x800240 <__data_end>
+			break;
+ 1ee:	08 95       	ret
+		}
+		case ESTADO_RESET:
+		{
+			UART_Write_String_To_Buffer("Estado reset.\r\n");
+ 1f0:	8f e2       	ldi	r24, 0x2F	; 47
+ 1f2:	92 e0       	ldi	r25, 0x02	; 2
+ 1f4:	0e 94 72 01 	call	0x2e4	; 0x2e4 <UART_Write_String_To_Buffer>
+			SystemState = -1;
+ 1f8:	8f ef       	ldi	r24, 0xFF	; 255
+ 1fa:	80 93 40 02 	sts	0x0240, r24	; 0x800240 <__data_end>
+ 1fe:	08 95       	ret
 
-000001e6 <SEOS_Init_Timer>:
+00000200 <SEOS_Init_Timer>:
 
 void SEOS_Init_Timer() {
 	// ------------------------ Timer 0 ------------------------
 	
 	// Configuro una interrupciÃ³n cada 1 mseg
 	OCR0A = 248;			//124 para 8MHz y 248 para 16MHz
- 1e6:	88 ef       	ldi	r24, 0xF8	; 248
- 1e8:	87 bd       	out	0x27, r24	; 39
+ 200:	88 ef       	ldi	r24, 0xF8	; 248
+ 202:	87 bd       	out	0x27, r24	; 39
 	TCCR0A = (1<<WGM01);   // Modo CTC, clock interno, prescalador 64
- 1ea:	82 e0       	ldi	r24, 0x02	; 2
- 1ec:	84 bd       	out	0x24, r24	; 36
+ 204:	82 e0       	ldi	r24, 0x02	; 2
+ 206:	84 bd       	out	0x24, r24	; 36
 	TCCR0B = (1<<CS01)|(1<<CS00);   // Modo CTC, clock interno, prescalador 64
- 1ee:	93 e0       	ldi	r25, 0x03	; 3
- 1f0:	95 bd       	out	0x25, r25	; 37
+ 208:	93 e0       	ldi	r25, 0x03	; 3
+ 20a:	95 bd       	out	0x25, r25	; 37
 	TIMSK0 = (1<<OCIE0A);   // Habilito Timer 0 en modo de interrupciÃ³n de comparaciÃ³n
- 1f2:	80 93 6e 00 	sts	0x006E, r24	; 0x80006e <__TEXT_REGION_LENGTH__+0x7f806e>
+ 20c:	80 93 6e 00 	sts	0x006E, r24	; 0x80006e <__TEXT_REGION_LENGTH__+0x7f806e>
 	
 	
 	// ------------------------ Timer 1 ------------------------
 	
 	TCCR1A|=(1<<COM1A0);// Configuro Timer1 para clk con prescaler P=1, modo CTC y salida por pin
- 1f6:	e0 e8       	ldi	r30, 0x80	; 128
- 1f8:	f0 e0       	ldi	r31, 0x00	; 0
- 1fa:	80 81       	ld	r24, Z
- 1fc:	80 64       	ori	r24, 0x40	; 64
- 1fe:	80 83       	st	Z, r24
+ 210:	e0 e8       	ldi	r30, 0x80	; 128
+ 212:	f0 e0       	ldi	r31, 0x00	; 0
+ 214:	80 81       	ld	r24, Z
+ 216:	80 64       	ori	r24, 0x40	; 64
+ 218:	80 83       	st	Z, r24
 	TCCR1B|=(1<<WGM12)|(1<<CS10);
- 200:	e1 e8       	ldi	r30, 0x81	; 129
- 202:	f0 e0       	ldi	r31, 0x00	; 0
- 204:	80 81       	ld	r24, Z
- 206:	89 60       	ori	r24, 0x09	; 9
- 208:	80 83       	st	Z, r24
+ 21a:	e1 e8       	ldi	r30, 0x81	; 129
+ 21c:	f0 e0       	ldi	r31, 0x00	; 0
+ 21e:	80 81       	ld	r24, Z
+ 220:	89 60       	ori	r24, 0x09	; 9
+ 222:	80 83       	st	Z, r24
 	DDRB|=(1<<PINB1); // El PIN1 del PORTB serÃ¡ el pin de salida
- 20a:	84 b1       	in	r24, 0x04	; 4
- 20c:	82 60       	ori	r24, 0x02	; 2
- 20e:	84 b9       	out	0x04, r24	; 4
+ 224:	84 b1       	in	r24, 0x04	; 4
+ 226:	82 60       	ori	r24, 0x02	; 2
+ 228:	84 b9       	out	0x04, r24	; 4
 
 
 	//Habilito la mÃ¡scara de interrupciones
 	
 	sei();
- 210:	78 94       	sei
- 212:	08 95       	ret
+ 22a:	78 94       	sei
+ 22c:	08 95       	ret
 
-00000214 <SEOS_Schedule_Tasks>:
+0000022e <SEOS_Schedule_Tasks>:
 
 uint8_t contador_UART = 0;
 uint8_t error_uart = 0;
 
 void SEOS_Schedule_Tasks() {
 	UART_flag=1; //actualizar periferico
- 214:	81 e0       	ldi	r24, 0x01	; 1
- 216:	80 93 4d 02 	sts	0x024D, r24	; 0x80024d <UART_flag>
+ 22e:	81 e0       	ldi	r24, 0x01	; 1
+ 230:	80 93 43 02 	sts	0x0243, r24	; 0x800243 <UART_flag>
 	MENU_flag=1; //actualizar menu
- 21a:	80 93 4c 02 	sts	0x024C, r24	; 0x80024c <MENU_flag>
- 21e:	08 95       	ret
+ 234:	80 93 42 02 	sts	0x0242, r24	; 0x800242 <MENU_flag>
+ 238:	08 95       	ret
 
-00000220 <SEOS_Dispatch_Tasks>:
+0000023a <SEOS_Dispatch_Tasks>:
 }
 
 void SEOS_Dispatch_Tasks() {
 	if (UART_flag) {
- 220:	80 91 4d 02 	lds	r24, 0x024D	; 0x80024d <UART_flag>
- 224:	88 23       	and	r24, r24
- 226:	31 f0       	breq	.+12     	; 0x234 <SEOS_Dispatch_Tasks+0x14>
+ 23a:	80 91 43 02 	lds	r24, 0x0243	; 0x800243 <UART_flag>
+ 23e:	88 23       	and	r24, r24
+ 240:	31 f0       	breq	.+12     	; 0x24e <SEOS_Dispatch_Tasks+0x14>
 		UART_flag=0;
- 228:	10 92 4d 02 	sts	0x024D, r1	; 0x80024d <UART_flag>
+ 242:	10 92 43 02 	sts	0x0243, r1	; 0x800243 <UART_flag>
 		UART_Update(&error_uart);
- 22c:	8b e4       	ldi	r24, 0x4B	; 75
- 22e:	92 e0       	ldi	r25, 0x02	; 2
- 230:	0e 94 98 01 	call	0x330	; 0x330 <UART_Update>
+ 246:	81 e4       	ldi	r24, 0x41	; 65
+ 248:	92 e0       	ldi	r25, 0x02	; 2
+ 24a:	0e 94 a5 01 	call	0x34a	; 0x34a <UART_Update>
 	}
 	MENU_Perform_Task();
- 234:	0e 94 c6 00 	call	0x18c	; 0x18c <MENU_Perform_Task>
- 238:	08 95       	ret
+ 24e:	0e 94 d3 00 	call	0x1a6	; 0x1a6 <MENU_Perform_Task>
+ 252:	08 95       	ret
 
-0000023a <__vector_14>:
+00000254 <__vector_14>:
 }
 
 // Control de la duraciï¿½n del sonido
 ISR (TIMER0_COMPA_vect) // ISR para la interrupciï¿½n de comparaciï¿½n del Timer 0
 {
- 23a:	1f 92       	push	r1
- 23c:	0f 92       	push	r0
- 23e:	0f b6       	in	r0, 0x3f	; 63
- 240:	0f 92       	push	r0
- 242:	11 24       	eor	r1, r1
- 244:	2f 93       	push	r18
- 246:	3f 93       	push	r19
- 248:	4f 93       	push	r20
- 24a:	5f 93       	push	r21
- 24c:	6f 93       	push	r22
- 24e:	7f 93       	push	r23
- 250:	8f 93       	push	r24
- 252:	9f 93       	push	r25
- 254:	af 93       	push	r26
- 256:	bf 93       	push	r27
- 258:	ef 93       	push	r30
- 25a:	ff 93       	push	r31
+ 254:	1f 92       	push	r1
+ 256:	0f 92       	push	r0
+ 258:	0f b6       	in	r0, 0x3f	; 63
+ 25a:	0f 92       	push	r0
+ 25c:	11 24       	eor	r1, r1
+ 25e:	2f 93       	push	r18
+ 260:	3f 93       	push	r19
+ 262:	4f 93       	push	r20
+ 264:	5f 93       	push	r21
+ 266:	6f 93       	push	r22
+ 268:	7f 93       	push	r23
+ 26a:	8f 93       	push	r24
+ 26c:	9f 93       	push	r25
+ 26e:	af 93       	push	r26
+ 270:	bf 93       	push	r27
+ 272:	ef 93       	push	r30
+ 274:	ff 93       	push	r31
 	SEOS_Schedule_Tasks();
- 25c:	0e 94 0a 01 	call	0x214	; 0x214 <SEOS_Schedule_Tasks>
- 260:	ff 91       	pop	r31
- 262:	ef 91       	pop	r30
- 264:	bf 91       	pop	r27
- 266:	af 91       	pop	r26
- 268:	9f 91       	pop	r25
- 26a:	8f 91       	pop	r24
- 26c:	7f 91       	pop	r23
- 26e:	6f 91       	pop	r22
- 270:	5f 91       	pop	r21
- 272:	4f 91       	pop	r20
- 274:	3f 91       	pop	r19
- 276:	2f 91       	pop	r18
- 278:	0f 90       	pop	r0
- 27a:	0f be       	out	0x3f, r0	; 63
- 27c:	0f 90       	pop	r0
- 27e:	1f 90       	pop	r1
- 280:	18 95       	reti
+ 276:	0e 94 17 01 	call	0x22e	; 0x22e <SEOS_Schedule_Tasks>
+ 27a:	ff 91       	pop	r31
+ 27c:	ef 91       	pop	r30
+ 27e:	bf 91       	pop	r27
+ 280:	af 91       	pop	r26
+ 282:	9f 91       	pop	r25
+ 284:	8f 91       	pop	r24
+ 286:	7f 91       	pop	r23
+ 288:	6f 91       	pop	r22
+ 28a:	5f 91       	pop	r21
+ 28c:	4f 91       	pop	r20
+ 28e:	3f 91       	pop	r19
+ 290:	2f 91       	pop	r18
+ 292:	0f 90       	pop	r0
+ 294:	0f be       	out	0x3f, r0	; 63
+ 296:	0f 90       	pop	r0
+ 298:	1f 90       	pop	r1
+ 29a:	18 95       	reti
 
-00000282 <UART_Init>:
+0000029c <UART_Init>:
 	if (UCSR0A & (1 << RXC0)){
 		*dato = UDR0;
 		return 1;
 	} else
 	return 0;
 }
- 282:	e1 ec       	ldi	r30, 0xC1	; 193
- 284:	f0 e0       	ldi	r31, 0x00	; 0
- 286:	10 82       	st	Z, r1
- 288:	96 e0       	ldi	r25, 0x06	; 6
- 28a:	90 93 c2 00 	sts	0x00C2, r25	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7f80c2>
- 28e:	10 92 c5 00 	sts	0x00C5, r1	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7f80c5>
- 292:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7f80c4>
- 296:	80 81       	ld	r24, Z
- 298:	88 60       	ori	r24, 0x08	; 8
- 29a:	80 83       	st	Z, r24
- 29c:	80 81       	ld	r24, Z
- 29e:	80 61       	ori	r24, 0x10	; 16
- 2a0:	80 83       	st	Z, r24
- 2a2:	08 95       	ret
+ 29c:	e1 ec       	ldi	r30, 0xC1	; 193
+ 29e:	f0 e0       	ldi	r31, 0x00	; 0
+ 2a0:	10 82       	st	Z, r1
+ 2a2:	96 e0       	ldi	r25, 0x06	; 6
+ 2a4:	90 93 c2 00 	sts	0x00C2, r25	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7f80c2>
+ 2a8:	10 92 c5 00 	sts	0x00C5, r1	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7f80c5>
+ 2ac:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7f80c4>
+ 2b0:	80 81       	ld	r24, Z
+ 2b2:	88 60       	ori	r24, 0x08	; 8
+ 2b4:	80 83       	st	Z, r24
+ 2b6:	80 81       	ld	r24, Z
+ 2b8:	80 61       	ori	r24, 0x10	; 16
+ 2ba:	80 83       	st	Z, r24
+ 2bc:	08 95       	ret
 
-000002a4 <UART_TX_Interrupt_Enable>:
+000002be <UART_TX_Interrupt_Enable>:
 
 void UART_TX_Interrupt_Enable(void){
 	UCSR0B |= (1<<UDRIE0);
- 2a4:	e1 ec       	ldi	r30, 0xC1	; 193
- 2a6:	f0 e0       	ldi	r31, 0x00	; 0
- 2a8:	80 81       	ld	r24, Z
- 2aa:	80 62       	ori	r24, 0x20	; 32
- 2ac:	80 83       	st	Z, r24
- 2ae:	08 95       	ret
+ 2be:	e1 ec       	ldi	r30, 0xC1	; 193
+ 2c0:	f0 e0       	ldi	r31, 0x00	; 0
+ 2c2:	80 81       	ld	r24, Z
+ 2c4:	80 62       	ori	r24, 0x20	; 32
+ 2c6:	80 83       	st	Z, r24
+ 2c8:	08 95       	ret
 
-000002b0 <UART_Write_Char_To_Buffer>:
+000002ca <UART_Write_Char_To_Buffer>:
 }
 
 void UART_Write_Char_To_Buffer (const char data, int * Error_code){
 	
 	if (TXindice_escritura < TX_BUFFER_LENGTH){ 
 		TX_buffer [TXindice_escritura] = data;
- 2b0:	90 91 4f 02 	lds	r25, 0x024F	; 0x80024f <TXindice_escritura>
- 2b4:	e9 2f       	mov	r30, r25
- 2b6:	f0 e0       	ldi	r31, 0x00	; 0
- 2b8:	ee 5a       	subi	r30, 0xAE	; 174
- 2ba:	fd 4f       	sbci	r31, 0xFD	; 253
- 2bc:	80 83       	st	Z, r24
+ 2ca:	90 91 45 02 	lds	r25, 0x0245	; 0x800245 <TXindice_escritura>
+ 2ce:	e9 2f       	mov	r30, r25
+ 2d0:	f0 e0       	ldi	r31, 0x00	; 0
+ 2d2:	e7 5b       	subi	r30, 0xB7	; 183
+ 2d4:	fd 4f       	sbci	r31, 0xFD	; 253
+ 2d6:	80 83       	st	Z, r24
 		TXindice_escritura++;
- 2be:	9f 5f       	subi	r25, 0xFF	; 255
- 2c0:	90 93 4f 02 	sts	0x024F, r25	; 0x80024f <TXindice_escritura>
+ 2d8:	9f 5f       	subi	r25, 0xFF	; 255
+ 2da:	90 93 45 02 	sts	0x0245, r25	; 0x800245 <TXindice_escritura>
 		UART_TX_Interrupt_Enable();
- 2c4:	0e 94 52 01 	call	0x2a4	; 0x2a4 <UART_TX_Interrupt_Enable>
- 2c8:	08 95       	ret
+ 2de:	0e 94 5f 01 	call	0x2be	; 0x2be <UART_TX_Interrupt_Enable>
+ 2e2:	08 95       	ret
 
-000002ca <UART_Write_String_To_Buffer>:
+000002e4 <UART_Write_String_To_Buffer>:
 		*Error_code = ERROR_UART_FULL_BUFF;
 	}
 	
 }
 
 void UART_Write_String_To_Buffer(const char* STR_PTR){
- 2ca:	ef 92       	push	r14
- 2cc:	ff 92       	push	r15
- 2ce:	1f 93       	push	r17
- 2d0:	cf 93       	push	r28
- 2d2:	df 93       	push	r29
- 2d4:	00 d0       	rcall	.+0      	; 0x2d6 <UART_Write_String_To_Buffer+0xc>
- 2d6:	cd b7       	in	r28, 0x3d	; 61
- 2d8:	de b7       	in	r29, 0x3e	; 62
- 2da:	7c 01       	movw	r14, r24
+ 2e4:	ef 92       	push	r14
+ 2e6:	ff 92       	push	r15
+ 2e8:	1f 93       	push	r17
+ 2ea:	cf 93       	push	r28
+ 2ec:	df 93       	push	r29
+ 2ee:	00 d0       	rcall	.+0      	; 0x2f0 <UART_Write_String_To_Buffer+0xc>
+ 2f0:	cd b7       	in	r28, 0x3d	; 61
+ 2f2:	de b7       	in	r29, 0x3e	; 62
+ 2f4:	7c 01       	movw	r14, r24
 	char i = 0;
 	int aux = 0;
- 2dc:	1a 82       	std	Y+2, r1	; 0x02
- 2de:	19 82       	std	Y+1, r1	; 0x01
+ 2f6:	1a 82       	std	Y+2, r1	; 0x02
+ 2f8:	19 82       	std	Y+1, r1	; 0x01
 	}
 	
 }
 
 void UART_Write_String_To_Buffer(const char* STR_PTR){
 	char i = 0;
- 2e0:	10 e0       	ldi	r17, 0x00	; 0
+ 2fa:	10 e0       	ldi	r17, 0x00	; 0
 	int aux = 0;
 	while (STR_PTR[i] != '\0'){
- 2e2:	06 c0       	rjmp	.+12     	; 0x2f0 <UART_Write_String_To_Buffer+0x26>
+ 2fc:	06 c0       	rjmp	.+12     	; 0x30a <UART_Write_String_To_Buffer+0x26>
 		UART_Write_Char_To_Buffer (STR_PTR[i],&aux);
- 2e4:	be 01       	movw	r22, r28
- 2e6:	6f 5f       	subi	r22, 0xFF	; 255
- 2e8:	7f 4f       	sbci	r23, 0xFF	; 255
- 2ea:	0e 94 58 01 	call	0x2b0	; 0x2b0 <UART_Write_Char_To_Buffer>
+ 2fe:	be 01       	movw	r22, r28
+ 300:	6f 5f       	subi	r22, 0xFF	; 255
+ 302:	7f 4f       	sbci	r23, 0xFF	; 255
+ 304:	0e 94 65 01 	call	0x2ca	; 0x2ca <UART_Write_Char_To_Buffer>
 		i++;
- 2ee:	1f 5f       	subi	r17, 0xFF	; 255
+ 308:	1f 5f       	subi	r17, 0xFF	; 255
 }
 
 void UART_Write_String_To_Buffer(const char* STR_PTR){
 	char i = 0;
 	int aux = 0;
 	while (STR_PTR[i] != '\0'){
- 2f0:	f7 01       	movw	r30, r14
- 2f2:	e1 0f       	add	r30, r17
- 2f4:	f1 1d       	adc	r31, r1
- 2f6:	80 81       	ld	r24, Z
- 2f8:	81 11       	cpse	r24, r1
- 2fa:	f4 cf       	rjmp	.-24     	; 0x2e4 <UART_Write_String_To_Buffer+0x1a>
+ 30a:	f7 01       	movw	r30, r14
+ 30c:	e1 0f       	add	r30, r17
+ 30e:	f1 1d       	adc	r31, r1
+ 310:	80 81       	ld	r24, Z
+ 312:	81 11       	cpse	r24, r1
+ 314:	f4 cf       	rjmp	.-24     	; 0x2fe <UART_Write_String_To_Buffer+0x1a>
 		UART_Write_Char_To_Buffer (STR_PTR[i],&aux);
 		i++;
 	}
 }
- 2fc:	0f 90       	pop	r0
- 2fe:	0f 90       	pop	r0
- 300:	df 91       	pop	r29
- 302:	cf 91       	pop	r28
- 304:	1f 91       	pop	r17
- 306:	ff 90       	pop	r15
- 308:	ef 90       	pop	r14
- 30a:	08 95       	ret
+ 316:	0f 90       	pop	r0
+ 318:	0f 90       	pop	r0
+ 31a:	df 91       	pop	r29
+ 31c:	cf 91       	pop	r28
+ 31e:	1f 91       	pop	r17
+ 320:	ff 90       	pop	r15
+ 322:	ef 90       	pop	r14
+ 324:	08 95       	ret
 
-0000030c <UART_TX_Interrupt_Disable>:
+00000326 <UART_TX_Interrupt_Disable>:
 	UCSR0B |= (1<<UDRIE0);
 }
 
 void UART_TX_Interrupt_Disable(void)
 {
 	UCSR0B &=~(1<<UDRIE0);
- 30c:	e1 ec       	ldi	r30, 0xC1	; 193
- 30e:	f0 e0       	ldi	r31, 0x00	; 0
- 310:	80 81       	ld	r24, Z
- 312:	8f 7d       	andi	r24, 0xDF	; 223
- 314:	80 83       	st	Z, r24
- 316:	08 95       	ret
+ 326:	e1 ec       	ldi	r30, 0xC1	; 193
+ 328:	f0 e0       	ldi	r31, 0x00	; 0
+ 32a:	80 81       	ld	r24, Z
+ 32c:	8f 7d       	andi	r24, 0xDF	; 223
+ 32e:	80 83       	st	Z, r24
+ 330:	08 95       	ret
 
-00000318 <UART_RX_Interrupt_Enable>:
+00000332 <UART_RX_Interrupt_Enable>:
 }
 
 void UART_RX_Interrupt_Enable(void){
 	UCSR0B |= (1<<RXCIE0);
- 318:	e1 ec       	ldi	r30, 0xC1	; 193
- 31a:	f0 e0       	ldi	r31, 0x00	; 0
- 31c:	80 81       	ld	r24, Z
- 31e:	80 68       	ori	r24, 0x80	; 128
- 320:	80 83       	st	Z, r24
- 322:	08 95       	ret
+ 332:	e1 ec       	ldi	r30, 0xC1	; 193
+ 334:	f0 e0       	ldi	r31, 0x00	; 0
+ 336:	80 81       	ld	r24, Z
+ 338:	80 68       	ori	r24, 0x80	; 128
+ 33a:	80 83       	st	Z, r24
+ 33c:	08 95       	ret
 
-00000324 <UART_RX_Interrupt_Disable>:
+0000033e <UART_RX_Interrupt_Disable>:
 }
 
 void UART_RX_Interrupt_Disable(void){
 	UCSR0B &= ~(1<<RXCIE0);
- 324:	e1 ec       	ldi	r30, 0xC1	; 193
- 326:	f0 e0       	ldi	r31, 0x00	; 0
- 328:	80 81       	ld	r24, Z
- 32a:	8f 77       	andi	r24, 0x7F	; 127
- 32c:	80 83       	st	Z, r24
- 32e:	08 95       	ret
+ 33e:	e1 ec       	ldi	r30, 0xC1	; 193
+ 340:	f0 e0       	ldi	r31, 0x00	; 0
+ 342:	80 81       	ld	r24, Z
+ 344:	8f 77       	andi	r24, 0x7F	; 127
+ 346:	80 83       	st	Z, r24
+ 348:	08 95       	ret
 
-00000330 <UART_Update>:
+0000034a <UART_Update>:
 }
 
 
 
 void UART_Update(int * Error_code){
     UART_RX_Interrupt_Enable();
- 330:	0e 94 8c 01 	call	0x318	; 0x318 <UART_RX_Interrupt_Enable>
+ 34a:	0e 94 99 01 	call	0x332	; 0x332 <UART_RX_Interrupt_Enable>
 	if (FLAG_datos_recibidos) {
- 334:	80 91 51 02 	lds	r24, 0x0251	; 0x800251 <FLAG_datos_recibidos>
- 338:	88 23       	and	r24, r24
- 33a:	79 f0       	breq	.+30     	; 0x35a <UART_Update+0x2a>
-		UART_Write_String_To_Buffer(RX_buffer);
- 33c:	82 e5       	ldi	r24, 0x52	; 82
- 33e:	93 e0       	ldi	r25, 0x03	; 3
- 340:	0e 94 65 01 	call	0x2ca	; 0x2ca <UART_Write_String_To_Buffer>
-		MENU_Command_Update(&RX_buffer, RXindice_escritura);
- 344:	60 91 4e 02 	lds	r22, 0x024E	; 0x80024e <RXindice_escritura>
- 348:	70 e0       	ldi	r23, 0x00	; 0
- 34a:	82 e5       	ldi	r24, 0x52	; 82
- 34c:	93 e0       	ldi	r25, 0x03	; 3
- 34e:	0e 94 72 00 	call	0xe4	; 0xe4 <MENU_Command_Update>
+ 34e:	80 91 48 02 	lds	r24, 0x0248	; 0x800248 <FLAG_datos_recibidos>
+ 352:	88 23       	and	r24, r24
+ 354:	41 f0       	breq	.+16     	; 0x366 <UART_Update+0x1c>
+		//UART_Write_String_To_Buffer(RX_buffer);
+		MENU_Command_Update(RX_buffer);
+ 356:	89 e4       	ldi	r24, 0x49	; 73
+ 358:	93 e0       	ldi	r25, 0x03	; 3
+ 35a:	0e 94 9e 00 	call	0x13c	; 0x13c <MENU_Command_Update>
 		RXindice_escritura = 0;
- 352:	10 92 4e 02 	sts	0x024E, r1	; 0x80024e <RXindice_escritura>
+ 35e:	10 92 44 02 	sts	0x0244, r1	; 0x800244 <RXindice_escritura>
 		FLAG_datos_recibidos = 0;
- 356:	10 92 51 02 	sts	0x0251, r1	; 0x800251 <FLAG_datos_recibidos>
- 35a:	08 95       	ret
+ 362:	10 92 48 02 	sts	0x0248, r1	; 0x800248 <FLAG_datos_recibidos>
+ 366:	08 95       	ret
 
-0000035c <__vector_19>:
+00000368 <__vector_19>:
 	}
 }
 
 // Foreground - Consumidor, esperamos a que la tarea de background genere los datos y los transmisitmos
 ISR(USART_UDRE_vect) {
- 35c:	1f 92       	push	r1
- 35e:	0f 92       	push	r0
- 360:	0f b6       	in	r0, 0x3f	; 63
- 362:	0f 92       	push	r0
- 364:	11 24       	eor	r1, r1
- 366:	2f 93       	push	r18
- 368:	3f 93       	push	r19
- 36a:	4f 93       	push	r20
- 36c:	5f 93       	push	r21
- 36e:	6f 93       	push	r22
- 370:	7f 93       	push	r23
- 372:	8f 93       	push	r24
- 374:	9f 93       	push	r25
- 376:	af 93       	push	r26
- 378:	bf 93       	push	r27
- 37a:	ef 93       	push	r30
- 37c:	ff 93       	push	r31
+ 368:	1f 92       	push	r1
+ 36a:	0f 92       	push	r0
+ 36c:	0f b6       	in	r0, 0x3f	; 63
+ 36e:	0f 92       	push	r0
+ 370:	11 24       	eor	r1, r1
+ 372:	2f 93       	push	r18
+ 374:	3f 93       	push	r19
+ 376:	4f 93       	push	r20
+ 378:	5f 93       	push	r21
+ 37a:	6f 93       	push	r22
+ 37c:	7f 93       	push	r23
+ 37e:	8f 93       	push	r24
+ 380:	9f 93       	push	r25
+ 382:	af 93       	push	r26
+ 384:	bf 93       	push	r27
+ 386:	ef 93       	push	r30
+ 388:	ff 93       	push	r31
 	if (TXindice_lectura == TXindice_escritura) {
- 37e:	80 91 50 02 	lds	r24, 0x0250	; 0x800250 <TXindice_lectura>
- 382:	90 91 4f 02 	lds	r25, 0x024F	; 0x80024f <TXindice_escritura>
- 386:	89 13       	cpse	r24, r25
- 388:	06 c0       	rjmp	.+12     	; 0x396 <__vector_19+0x3a>
+ 38a:	80 91 46 02 	lds	r24, 0x0246	; 0x800246 <TXindice_lectura>
+ 38e:	90 91 45 02 	lds	r25, 0x0245	; 0x800245 <TXindice_escritura>
+ 392:	89 13       	cpse	r24, r25
+ 394:	06 c0       	rjmp	.+12     	; 0x3a2 <__vector_19+0x3a>
 		// Se han transmitido todos los datos en el buffer
 		UCSR0B &= ~(1 << UDRIE0);  // Deshabilitar la interrupción de registro de datos vacío
- 38a:	e1 ec       	ldi	r30, 0xC1	; 193
- 38c:	f0 e0       	ldi	r31, 0x00	; 0
- 38e:	80 81       	ld	r24, Z
- 390:	8f 7d       	andi	r24, 0xDF	; 223
- 392:	80 83       	st	Z, r24
- 394:	14 c0       	rjmp	.+40     	; 0x3be <__vector_19+0x62>
+ 396:	e1 ec       	ldi	r30, 0xC1	; 193
+ 398:	f0 e0       	ldi	r31, 0x00	; 0
+ 39a:	80 81       	ld	r24, Z
+ 39c:	8f 7d       	andi	r24, 0xDF	; 223
+ 39e:	80 83       	st	Z, r24
+ 3a0:	14 c0       	rjmp	.+40     	; 0x3ca <__vector_19+0x62>
 		} else {
 		if (TX_buffer[TXindice_lectura] != '\0') {
- 396:	e8 2f       	mov	r30, r24
- 398:	f0 e0       	ldi	r31, 0x00	; 0
- 39a:	ee 5a       	subi	r30, 0xAE	; 174
- 39c:	fd 4f       	sbci	r31, 0xFD	; 253
- 39e:	90 81       	ld	r25, Z
- 3a0:	99 23       	and	r25, r25
- 3a2:	31 f0       	breq	.+12     	; 0x3b0 <__vector_19+0x54>
+ 3a2:	e8 2f       	mov	r30, r24
+ 3a4:	f0 e0       	ldi	r31, 0x00	; 0
+ 3a6:	e7 5b       	subi	r30, 0xB7	; 183
+ 3a8:	fd 4f       	sbci	r31, 0xFD	; 253
+ 3aa:	90 81       	ld	r25, Z
+ 3ac:	99 23       	and	r25, r25
+ 3ae:	31 f0       	breq	.+12     	; 0x3bc <__vector_19+0x54>
 			UDR0 = TX_buffer[TXindice_lectura++];  // Enviar el siguiente carácter del buffer
- 3a4:	8f 5f       	subi	r24, 0xFF	; 255
- 3a6:	80 93 50 02 	sts	0x0250, r24	; 0x800250 <TXindice_lectura>
- 3aa:	90 93 c6 00 	sts	0x00C6, r25	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
- 3ae:	07 c0       	rjmp	.+14     	; 0x3be <__vector_19+0x62>
+ 3b0:	8f 5f       	subi	r24, 0xFF	; 255
+ 3b2:	80 93 46 02 	sts	0x0246, r24	; 0x800246 <TXindice_lectura>
+ 3b6:	90 93 c6 00 	sts	0x00C6, r25	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
+ 3ba:	07 c0       	rjmp	.+14     	; 0x3ca <__vector_19+0x62>
 			} else {
 			// Fin de mensaje (carácter nulo '\0')
 			UCSR0B &= ~(1 << UDRIE0);  // Deshabilitar la interrupción de registro de datos vacío
- 3b0:	e1 ec       	ldi	r30, 0xC1	; 193
- 3b2:	f0 e0       	ldi	r31, 0x00	; 0
- 3b4:	80 81       	ld	r24, Z
- 3b6:	8f 7d       	andi	r24, 0xDF	; 223
- 3b8:	80 83       	st	Z, r24
+ 3bc:	e1 ec       	ldi	r30, 0xC1	; 193
+ 3be:	f0 e0       	ldi	r31, 0x00	; 0
+ 3c0:	80 81       	ld	r24, Z
+ 3c2:	8f 7d       	andi	r24, 0xDF	; 223
+ 3c4:	80 83       	st	Z, r24
 			UART_TX_Interrupt_Disable();  // Habilitar interrupción de recepción USART
- 3ba:	0e 94 86 01 	call	0x30c	; 0x30c <UART_TX_Interrupt_Disable>
+ 3c6:	0e 94 93 01 	call	0x326	; 0x326 <UART_TX_Interrupt_Disable>
 		}
 	}
 }
- 3be:	ff 91       	pop	r31
- 3c0:	ef 91       	pop	r30
- 3c2:	bf 91       	pop	r27
- 3c4:	af 91       	pop	r26
- 3c6:	9f 91       	pop	r25
- 3c8:	8f 91       	pop	r24
- 3ca:	7f 91       	pop	r23
- 3cc:	6f 91       	pop	r22
- 3ce:	5f 91       	pop	r21
- 3d0:	4f 91       	pop	r20
- 3d2:	3f 91       	pop	r19
- 3d4:	2f 91       	pop	r18
- 3d6:	0f 90       	pop	r0
- 3d8:	0f be       	out	0x3f, r0	; 63
- 3da:	0f 90       	pop	r0
- 3dc:	1f 90       	pop	r1
- 3de:	18 95       	reti
+ 3ca:	ff 91       	pop	r31
+ 3cc:	ef 91       	pop	r30
+ 3ce:	bf 91       	pop	r27
+ 3d0:	af 91       	pop	r26
+ 3d2:	9f 91       	pop	r25
+ 3d4:	8f 91       	pop	r24
+ 3d6:	7f 91       	pop	r23
+ 3d8:	6f 91       	pop	r22
+ 3da:	5f 91       	pop	r21
+ 3dc:	4f 91       	pop	r20
+ 3de:	3f 91       	pop	r19
+ 3e0:	2f 91       	pop	r18
+ 3e2:	0f 90       	pop	r0
+ 3e4:	0f be       	out	0x3f, r0	; 63
+ 3e6:	0f 90       	pop	r0
+ 3e8:	1f 90       	pop	r1
+ 3ea:	18 95       	reti
 
-000003e0 <__vector_18>:
+000003ec <__vector_18>:
 
 // Foreground - Productor
 ISR(USART_RX_vect) {
- 3e0:	1f 92       	push	r1
- 3e2:	0f 92       	push	r0
- 3e4:	0f b6       	in	r0, 0x3f	; 63
- 3e6:	0f 92       	push	r0
- 3e8:	11 24       	eor	r1, r1
- 3ea:	2f 93       	push	r18
- 3ec:	3f 93       	push	r19
- 3ee:	4f 93       	push	r20
- 3f0:	5f 93       	push	r21
- 3f2:	6f 93       	push	r22
- 3f4:	7f 93       	push	r23
- 3f6:	8f 93       	push	r24
- 3f8:	9f 93       	push	r25
- 3fa:	af 93       	push	r26
- 3fc:	bf 93       	push	r27
- 3fe:	ef 93       	push	r30
- 400:	ff 93       	push	r31
+ 3ec:	1f 92       	push	r1
+ 3ee:	0f 92       	push	r0
+ 3f0:	0f b6       	in	r0, 0x3f	; 63
+ 3f2:	0f 92       	push	r0
+ 3f4:	11 24       	eor	r1, r1
+ 3f6:	2f 93       	push	r18
+ 3f8:	3f 93       	push	r19
+ 3fa:	4f 93       	push	r20
+ 3fc:	5f 93       	push	r21
+ 3fe:	6f 93       	push	r22
+ 400:	7f 93       	push	r23
+ 402:	8f 93       	push	r24
+ 404:	9f 93       	push	r25
+ 406:	af 93       	push	r26
+ 408:	bf 93       	push	r27
+ 40a:	cf 93       	push	r28
+ 40c:	ef 93       	push	r30
+ 40e:	ff 93       	push	r31
 	char aux = UDR0;
- 402:	90 91 c6 00 	lds	r25, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
-	if ((aux != '\r') && (RXindice_escritura<RX_BUFFER_LENGTH)){
- 406:	9d 30       	cpi	r25, 0x0D	; 13
- 408:	69 f0       	breq	.+26     	; 0x424 <__EEPROM_REGION_LENGTH__+0x24>
- 40a:	80 91 4e 02 	lds	r24, 0x024E	; 0x80024e <RXindice_escritura>
- 40e:	8a 30       	cpi	r24, 0x0A	; 10
- 410:	48 f4       	brcc	.+18     	; 0x424 <__EEPROM_REGION_LENGTH__+0x24>
+ 410:	c0 91 c6 00 	lds	r28, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
+	if ((aux != '\r') && (aux != '\n')){
+ 414:	cd 30       	cpi	r28, 0x0D	; 13
+ 416:	69 f0       	breq	.+26     	; 0x432 <__EEPROM_REGION_LENGTH__+0x32>
+ 418:	ca 30       	cpi	r28, 0x0A	; 10
+ 41a:	59 f0       	breq	.+22     	; 0x432 <__EEPROM_REGION_LENGTH__+0x32>
 		RX_buffer[RXindice_escritura] = aux;
- 412:	e8 2f       	mov	r30, r24
- 414:	f0 e0       	ldi	r31, 0x00	; 0
- 416:	ee 5a       	subi	r30, 0xAE	; 174
- 418:	fc 4f       	sbci	r31, 0xFC	; 252
- 41a:	90 83       	st	Z, r25
+ 41c:	80 91 44 02 	lds	r24, 0x0244	; 0x800244 <RXindice_escritura>
+ 420:	e8 2f       	mov	r30, r24
+ 422:	f0 e0       	ldi	r31, 0x00	; 0
+ 424:	e7 5b       	subi	r30, 0xB7	; 183
+ 426:	fc 4f       	sbci	r31, 0xFC	; 252
+ 428:	c0 83       	st	Z, r28
 		RXindice_escritura++;
- 41c:	8f 5f       	subi	r24, 0xFF	; 255
- 41e:	80 93 4e 02 	sts	0x024E, r24	; 0x80024e <RXindice_escritura>
- 422:	05 c0       	rjmp	.+10     	; 0x42e <__EEPROM_REGION_LENGTH__+0x2e>
+ 42a:	8f 5f       	subi	r24, 0xFF	; 255
+ 42c:	80 93 44 02 	sts	0x0244, r24	; 0x800244 <RXindice_escritura>
+ 430:	13 c0       	rjmp	.+38     	; 0x458 <__EEPROM_REGION_LENGTH__+0x58>
 	}else{
-		FLAG_datos_recibidos = 1;
- 424:	81 e0       	ldi	r24, 0x01	; 1
- 426:	80 93 51 02 	sts	0x0251, r24	; 0x800251 <FLAG_datos_recibidos>
-		UART_RX_Interrupt_Disable();
- 42a:	0e 94 92 01 	call	0x324	; 0x324 <UART_RX_Interrupt_Disable>
+		if (aux == '\r'){
+ 432:	cd 30       	cpi	r28, 0x0D	; 13
+ 434:	51 f4       	brne	.+20     	; 0x44a <__EEPROM_REGION_LENGTH__+0x4a>
+			RX_buffer[RXindice_escritura] = '\0';
+ 436:	80 91 44 02 	lds	r24, 0x0244	; 0x800244 <RXindice_escritura>
+ 43a:	e8 2f       	mov	r30, r24
+ 43c:	f0 e0       	ldi	r31, 0x00	; 0
+ 43e:	e7 5b       	subi	r30, 0xB7	; 183
+ 440:	fc 4f       	sbci	r31, 0xFC	; 252
+ 442:	10 82       	st	Z, r1
+			RXindice_escritura++;
+ 444:	8f 5f       	subi	r24, 0xFF	; 255
+ 446:	80 93 44 02 	sts	0x0244, r24	; 0x800244 <RXindice_escritura>
+		}
+		if (aux == '\n'){
+ 44a:	ca 30       	cpi	r28, 0x0A	; 10
+ 44c:	29 f4       	brne	.+10     	; 0x458 <__EEPROM_REGION_LENGTH__+0x58>
+			FLAG_datos_recibidos = 1;
+ 44e:	81 e0       	ldi	r24, 0x01	; 1
+ 450:	80 93 48 02 	sts	0x0248, r24	; 0x800248 <FLAG_datos_recibidos>
+			UART_RX_Interrupt_Disable();			
+ 454:	0e 94 9f 01 	call	0x33e	; 0x33e <UART_RX_Interrupt_Disable>
+		}
 	}
- 42e:	ff 91       	pop	r31
- 430:	ef 91       	pop	r30
- 432:	bf 91       	pop	r27
- 434:	af 91       	pop	r26
- 436:	9f 91       	pop	r25
- 438:	8f 91       	pop	r24
- 43a:	7f 91       	pop	r23
- 43c:	6f 91       	pop	r22
- 43e:	5f 91       	pop	r21
- 440:	4f 91       	pop	r20
- 442:	3f 91       	pop	r19
- 444:	2f 91       	pop	r18
- 446:	0f 90       	pop	r0
- 448:	0f be       	out	0x3f, r0	; 63
- 44a:	0f 90       	pop	r0
- 44c:	1f 90       	pop	r1
- 44e:	18 95       	reti
+	UART_Write_Char_To_Buffer(aux,FLAG_errorBuffer);
+ 458:	60 91 47 02 	lds	r22, 0x0247	; 0x800247 <FLAG_errorBuffer>
+ 45c:	70 e0       	ldi	r23, 0x00	; 0
+ 45e:	8c 2f       	mov	r24, r28
+ 460:	0e 94 65 01 	call	0x2ca	; 0x2ca <UART_Write_Char_To_Buffer>
+ 464:	ff 91       	pop	r31
+ 466:	ef 91       	pop	r30
+ 468:	cf 91       	pop	r28
+ 46a:	bf 91       	pop	r27
+ 46c:	af 91       	pop	r26
+ 46e:	9f 91       	pop	r25
+ 470:	8f 91       	pop	r24
+ 472:	7f 91       	pop	r23
+ 474:	6f 91       	pop	r22
+ 476:	5f 91       	pop	r21
+ 478:	4f 91       	pop	r20
+ 47a:	3f 91       	pop	r19
+ 47c:	2f 91       	pop	r18
+ 47e:	0f 90       	pop	r0
+ 480:	0f be       	out	0x3f, r0	; 63
+ 482:	0f 90       	pop	r0
+ 484:	1f 90       	pop	r1
+ 486:	18 95       	reti
 
-00000450 <strcmp>:
- 450:	fb 01       	movw	r30, r22
- 452:	dc 01       	movw	r26, r24
- 454:	8d 91       	ld	r24, X+
- 456:	01 90       	ld	r0, Z+
- 458:	80 19       	sub	r24, r0
- 45a:	01 10       	cpse	r0, r1
- 45c:	d9 f3       	breq	.-10     	; 0x454 <strcmp+0x4>
- 45e:	99 0b       	sbc	r25, r25
- 460:	08 95       	ret
+00000488 <_exit>:
+ 488:	f8 94       	cli
 
-00000462 <_exit>:
- 462:	f8 94       	cli
-
-00000464 <__stop_program>:
- 464:	ff cf       	rjmp	.-2      	; 0x464 <__stop_program>
+0000048a <__stop_program>:
+ 48a:	ff cf       	rjmp	.-2      	; 0x48a <__stop_program>
