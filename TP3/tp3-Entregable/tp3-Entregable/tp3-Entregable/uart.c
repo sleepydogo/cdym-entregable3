@@ -14,6 +14,20 @@ char TX_buffer[TX_BUFFER_LENGTH];
 uint8_t TXindice_lectura = 0, TXindice_escritura = 0;
 uint8_t RXindice_lectura = 0, RXindice_escritura = 0;
 
+void UART_Init(uint8_t baud){
+	// config = 0x33 ==> Configuro UART 9600bps, 8 bit data, 1 stop @ F_CPU = 8MHz.
+	// config = 0x25 ==> Configuro UART 9600bps, 8 bit data, 1 stop @ F_CPU = 4Hz.
+	UCSR0B = 0;
+	UCSR0C = (1<<UCSZ01) | (1<<UCSZ00);
+	UBRR0H = (unsigned char)(baud>>8);
+	UBRR0L = (unsigned char)baud;
+	
+	//TX Enable
+	UCSR0B |= (1<<TXEN0);
+	//RX Enable
+	UCSR0B |= (1<<RXEN0);
+}
+
 void UART_Write_Char_To_Buffer (const char data, int * Error_code){
 	
 	if (TXindice_escritura < TX_BUFFER_LENGTH){ 
@@ -51,31 +65,24 @@ char UART_Get_Char_From_Buffer(char *ch){
     }
 }
 
-void UART_Update(int * Error_code){
-    UART_RX_Interrupt_Enable();
-	
-	if (FLAG_datos_recibidos) {
-		char comando[20];
-		memcpy(comando, RX_buffer, RXindice_escritura);
-		UART_Write_String_To_Buffer(comando);
-		FLAG_datos_recibidos = 0;
-		RXindice_escritura = 0;
+void UART_Send_Char (char dato)
+{
+	long Timeout = 0;
+	while ( ( ++Timeout ) && ((UCSR0A & (1<<UDRE0))==0));
+	if (Timeout != 0)
+	UDR0 = dato;
+	else {
+		
 	}
+	return 0;
 }
 
-// Estas son las funciones que encapsulan el Hardware
-void UART_Init(uint8_t baud){
-		// config = 0x33 ==> Configuro UART 9600bps, 8 bit data, 1 stop @ F_CPU = 8MHz.
-		// config = 0x25 ==> Configuro UART 9600bps, 8 bit data, 1 stop @ F_CPU = 4Hz.
-		UCSR0B = 0;
-		UCSR0C = (1<<UCSZ01) | (1<<UCSZ00);
-		UBRR0H = (unsigned char)(baud>>8);
-		UBRR0L = (unsigned char)baud;
-		
-		//TX Enable
-		UCSR0B |= (1<<TXEN0);
-		//RX Enable
-		UCSR0B |= (1<<RXEN0);	
+char UART_Receive_data(char *dato){
+	if (UCSR0A & (1 << RXC0)){
+		*dato = UDR0;
+		return 1;
+	} else
+	return 0;
 }
 
 void UART_TX_Interrupt_Enable(void){
@@ -95,24 +102,17 @@ void UART_RX_Interrupt_Disable(void){
 	UCSR0B &= ~(1<<RXCIE0);
 }
 
-void UART_Send_Char (char dato)
-{
-	long Timeout = 0;
-	while ( ( ++Timeout ) && ((UCSR0A & (1<<UDRE0))==0));
-	if (Timeout != 0)
-		UDR0 = dato;
-	else {
-		
-	}
-	return 0;
-}
 
-char UART_Receive_data(char *dato){
-    if (UCSR0A & (1 << RXC0)){
-        *dato = UDR0;
-        return 1;
-    } else
-		return 0;
+
+void UART_Update(int * Error_code){
+    UART_RX_Interrupt_Enable();
+	if (FLAG_datos_recibidos) {
+		char comando[10];
+		memcpy(comando, RX_buffer, RXindice_escritura);
+		UART_Write_String_To_Buffer(comando);
+		RXindice_escritura = 0;
+		FLAG_datos_recibidos = 0;
+	}
 }
 
 // Foreground - Consumidor, esperamos a que la tarea de background genere los datos y los transmisitmos
@@ -126,7 +126,7 @@ ISR(USART_UDRE_vect) {
 			} else {
 			// Fin de mensaje (carácter nulo '\0')
 			UCSR0B &= ~(1 << UDRIE0);  // Deshabilitar la interrupción de registro de datos vacío
-			UART_RX_Interrupt_Enable();  // Habilitar interrupción de recepción USART
+			UART_TX_Interrupt_Disable();  // Habilitar interrupción de recepción USART
 		}
 	}
 }
@@ -134,11 +134,10 @@ ISR(USART_UDRE_vect) {
 // Foreground - Productor
 ISR(USART_RX_vect) {
 	char aux = UDR0;
-	if (aux != '\r'){
+	if ((aux != '\r') && (RXindice_escritura<RX_BUFFER_LENGTH)){
 		RX_buffer[RXindice_escritura] = aux;
 		RXindice_escritura++;
 	}else{
-		RX_buffer[RXindice_escritura] = '\0';
 		FLAG_datos_recibidos = 1;
 		UART_RX_Interrupt_Disable();
 	}
