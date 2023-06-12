@@ -107,9 +107,8 @@ void UART_RX_Interrupt_Disable(void){
 void UART_Update(int * Error_code){
     UART_RX_Interrupt_Enable();
 	if (FLAG_datos_recibidos) {
-		char comando[10];
-		memcpy(comando, RX_buffer, RXindice_escritura);
-		UART_Write_String_To_Buffer(comando);
+		UART_Write_String_To_Buffer(RX_buffer);
+		MENU_Command_Update(&RX_buffer, RXindice_escritura);
 		RXindice_escritura = 0;
 		FLAG_datos_recibidos = 0;
 	}

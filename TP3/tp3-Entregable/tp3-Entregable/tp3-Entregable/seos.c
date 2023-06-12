@@ -53,10 +53,7 @@ void SEOS_Dispatch_Tasks() {
 		UART_flag=0;
 		UART_Update(&error_uart);
 	}
-// 	if (MENU_flag) {
-// 		MENU_flag=0;
-// 		MENU_Command_Update();
-// 	}
+	MENU_Perform_Task();
 }
 
 // Control de la duraci�n del sonido

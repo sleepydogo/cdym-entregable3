@@ -7,6 +7,8 @@
 
 #include "menu.h"
 
+uint8_t SystemState = 0;
+
 void MENU_Show_Menu(void)
 {
 	// El menú se escribe en el buffer de transmisión
@@ -17,44 +19,47 @@ void MENU_Show_Menu(void)
     UART_Write_String_To_Buffer("	* RESET: reinicia el sistema al estado inicial\n\r");
 }
  
-void MENU_Command_Update(void)
+void MENU_Command_Update(const char * RX_buffer)
 {
-    char ch;
-    // Check for user inputs
-    if (UART_Get_Char_From_Buffer(&ch) != 0)
-    {
-        MENU_Perform_Task(ch);
-        MENU_Show_Menu();
-    }
+	char comando[10];
+	memcpy(comando, RX_buffer, 10);
+	if (!strcmp(RX_buffer,"PLAY")) SystemState = ESTADO_PLAY;
+	else if (!strcmp(RX_buffer,"STOP")) SystemState = ESTADO_STOP;
+	else if (!strcmp(RX_buffer,"NUM")) SystemState = ESTADO_NUM;
+	else if (!strcmp(RX_buffer,"RESET")) SystemState = ESTADO_RESET;
+	else {
+		UART_Write_String_To_Buffer("\n	Comando no valido.\n\r");
+	}
+	UART_Write_String_To_Buffer(comando);
 }
 
-/*void MENU_Perform_Task(char c)
+void MENU_Perform_Task()
 {
-    // Echo the menu option
-    
-	UART_Write_Char_To_Buffer(c);
-    UART_Write_Char_To_Buffer("\n\r");
-    switch (c)
+    switch (SystemState)
     {
-    case 'PLAY':
+    case ESTADO_PLAY:
     {
-        //Function_1(); // Perform the task PORT1
+        UART_Write_String_To_Buffer("\n	Estado play\n\r");
+		SystemState = -1;
+		break;
+    }
+    case ESTADO_STOP:
+    {
+		UART_Write_String_To_Buffer("\n	estado stop\n\r");
+		SystemState = -1;
         break;
     }
-    case 'STOP':
-    {
-        //Function_2(); // Perform the task PORT2
-        break;
-    }
-	case 'NUM':
+	case ESTADO_NUM:
 	{
-		//Function_2(); // Perform the task PORT2
+		UART_Write_String_To_Buffer("\n	estado num \n\r");
+		SystemState = -1;
 		break;
 	}
-	case 'RESET':
+	case ESTADO_RESET:
 	{
-		//Function_2(); // Perform the task PORT2
+		UART_Write_String_To_Buffer("\n	estado reset.\n\r");
+		SystemState = -1;
 		break;
 	}
     }
-}*/
+}

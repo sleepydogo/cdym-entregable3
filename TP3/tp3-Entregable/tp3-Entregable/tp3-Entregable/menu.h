@@ -11,12 +11,19 @@
 
 
 #include <stdio.h>
-#include "uart.h"
 #include <stdlib.h>
+#include <string.h>
+
+#include "uart.h"
+
+#define ESTADO_PLAY 1
+#define ESTADO_STOP 2
+#define ESTADO_NUM 3
+#define ESTADO_RESET 4
 
 void MENU_Show_Menu(void);
-void MENU_Command_Update(void);
-void MENU_Perform_Task(char c);
+void MENU_Command_Update(const char * RX_buffer);
+void MENU_Perform_Task();
 
 
 #endif /* MENU_H_ */
