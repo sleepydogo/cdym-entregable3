@@ -10,10 +10,10 @@
 #define RTTTL_H_
 
 
+#include <avr/io.h>
+#include <avr/interrupt.h>
 
 void sound(unsigned int freq, unsigned int dur);
 void play_song(char *song);
-
-
 
 #endif /* RTTTL_H_ */

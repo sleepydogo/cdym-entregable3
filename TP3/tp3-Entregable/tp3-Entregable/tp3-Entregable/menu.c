@@ -7,7 +7,7 @@
 
 #include "menu.h"
 
-uint8_t SystemState = 0;
+uint8_t SystemState = 0, cancion_elegida = 0;
 
 void MENU_Show_Menu(void)
 {
@@ -51,19 +51,28 @@ void MENU_Perform_Task()
 	{
 		case ESTADO_PLAY:
 		{
-			UART_Write_String_To_Buffer("Estado PLAY\r\n");
+			char status[100];
+			sprintf(status, "\n	Reproduciendo %d \r\n", cancion_elegida);
+			UART_Write_String_To_Buffer(status);
 			SystemState = -1;
 			break;
 		}
 		case ESTADO_STOP:
 		{
-			UART_Write_String_To_Buffer("Estado STOP\r\n");
+			//RTTTL_stop_song();
+			UART_Write_String_To_Buffer("Cancion detenida\r\n");
 			SystemState = -1;
 			break;
 		}
 		case ESTADO_NUM:
 		{
-			UART_Write_String_To_Buffer("Estado NUM\r\n");
+			UART_Write_String_To_Buffer("	1. The Simpsons \r\n");
+			UART_Write_String_To_Buffer("	2. Mission Impossible\r\n");
+			UART_Write_String_To_Buffer("	3. Batman\r\n");
+			UART_Write_String_To_Buffer("	4. La pantera rosa\r\n");
+			UART_Write_String_To_Buffer("	5. Adams Family\r\n");
+			UART_Write_String_To_Buffer("	6. Argentina\r\n");
+			
 			SystemState = -1;
 			break;
 		}
