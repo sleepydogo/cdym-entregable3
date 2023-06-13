@@ -72,23 +72,27 @@ void MENU_Perform_Task()
 	{
 		case ESTADO_PLAY:
 		{
-			char status[100];
-			sprintf(status, "	Reproduciendo	--> %d \r", cancion_elegida);
-			UART_Write_String_To_Buffer(status);
-			RTTTL_play_song();
+			char status[20];
+			if (cancion_elegida != 0) {
+				sprintf(status, "	Reproduciendo	--> %d \r", cancion_elegida);
+				UART_Write_String_To_Buffer(status);
+				RTTTL_play_song();	
+			}
+			else {
+				UART_Write_String_To_Buffer("\n	Error: No se ha seleccionado una cancion... \n\r");
+			}
 			SystemState = -1;
 			break;
 		}
 		case ESTADO_STOP:
 		{
-			RTTTL_stop_song();
 			UART_Write_String_To_Buffer("Cancion detenida\r");
 			SystemState = -1;
 			break;
 		}
 		case ESTADO_NUM:
 		{
-			char status[100];
+			char status[20];
 			sprintf(status, "	Cancion elegida	--> %d \r", cancion_elegida);
 			UART_Write_String_To_Buffer(status);
 			RTTTL_cambiar_cancion(cancion_elegida-1);
