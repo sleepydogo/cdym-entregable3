@@ -18,6 +18,8 @@
 #include "main.h"
 #include "uart.h"
 
+#define MENU_OPTIONS_CANT 5
+
 #define ESTADO_PLAY 1
 #define ESTADO_STOP 2
 #define ESTADO_NUM 3
@@ -28,6 +30,7 @@ void MENU_Command_Update(const char * RX_buffer);
 void MENU_Perform_Task(void);
 void MENU_Show_Canciones(void);
 uint8_t MENU_compareCommand(const char* str1, const char* str2, uint8_t is_num);
+void MENU_Show_Option(char *option, uint8_t lenght);
 
 
 #endif /* MENU_H_ */

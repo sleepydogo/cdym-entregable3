@@ -7,7 +7,19 @@
 
 #include "menu.h"
 
+#define LONG_option0 8
+#define LONG_option1 44
+#define LONG_option2 54
+#define LONG_option3 61
+#define LONG_option4 49
+
 uint8_t SystemState = 0, cancion_elegida = 0;
+
+const char PROGMEM option0 []  = "Menu:\r";
+const char PROGMEM option1 []  = "	* PLAY: reproduce la cancion seleccionada\r";
+const char PROGMEM option2 []  = "	* STOP: detiene la reproduccion del sonido en curso\r";
+const char PROGMEM option3 []  = "	* NUM: numero de cancion a seleccionar de la lista [1 a N]\r";
+const char PROGMEM option4 []  = "	* RESET: reinicia el sistema al estado inicial\r";
 
 void MENU_Show_Canciones(void) {
 	UART_Write_String_To_Buffer("Canciones: \r");
@@ -19,14 +31,21 @@ void MENU_Show_Canciones(void) {
 	UART_Write_String_To_Buffer("	6. Argentina\r");
 }
 
-void MENU_Show_Menu(void)
+void MENU_Show_Option(char *option, uint8_t lenght) {
+	uint8_t uno;
+	for (unsigned char i = 0; i < lenght; i++)
+	{
+		UART_Write_Char_To_Buffer(pgm_read_byte(&option[i]), uno);
+	}
+}
+
+void MENU_Show_Menu()
 {
-	// El menú se escribe en el buffer de transmisión	 
-	UART_Write_String_To_Buffer("Menu:\r");
-    UART_Write_String_To_Buffer("	* PLAY: reproduce la cancion seleccionada\r");
-    UART_Write_String_To_Buffer("	* STOP: detiene la reproduccion del sonido en curso\r");
-    UART_Write_String_To_Buffer("	* NUM: numero de cancion a seleccionar de la lista [1 a N]\r");
-    UART_Write_String_To_Buffer("	* RESET: reinicia el sistema al estado inicial\r");
+	MENU_Show_Option(option0, LONG_option0);
+ 	MENU_Show_Option(option1, LONG_option1);
+ 	MENU_Show_Option(option2, LONG_option2);
+ 	MENU_Show_Option(option3, LONG_option3);
+ 	MENU_Show_Option(option4, LONG_option4);
 }
  
 void MENU_Command_Update(const char* RX_buffer)
@@ -87,6 +106,7 @@ void MENU_Perform_Task()
 		case ESTADO_STOP:
 		{
 			UART_Write_String_To_Buffer("Cancion detenida\r");
+			RTTTL_set_flag_stop(0);
 			SystemState = -1;
 			break;
 		}
