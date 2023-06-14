@@ -16,10 +16,10 @@
 uint8_t SystemState = 0, cancion_elegida = 0;
 
 const char PROGMEM option0 []  = "Menu:\r";
-const char PROGMEM option1 []  = "	* PLAY: reproduce la cancion seleccionada\r";
-const char PROGMEM option2 []  = "	* STOP: detiene la reproduccion del sonido en curso\r";
-const char PROGMEM option3 []  = "	* NUM: numero de cancion a seleccionar de la lista [1 a N]\r";
-const char PROGMEM option4 []  = "	* RESET: reinicia el sistema al estado inicial\r";
+const char PROGMEM option1 []  = "* PLAY: reproduce la cancion seleccionada\r";
+const char PROGMEM option2 []  = "* STOP: detiene la reproduccion del sonido en curso\r";
+const char PROGMEM option3 []  = "* NUM: numero de cancion a seleccionar de la lista [1 a N]\r";
+const char PROGMEM option4 []  = "* RESET: reinicia el sistema al estado inicial\r";
 
 void MENU_Show_Canciones(void) {
 	UART_Write_String_To_Buffer("Canciones: \r");
@@ -36,6 +36,7 @@ void MENU_Show_Option(char *option, uint8_t lenght) {
 	for (unsigned char i = 0; i < lenght; i++)
 	{
 		UART_Write_Char_To_Buffer(pgm_read_byte(&option[i]), uno);
+		if (i == lenght - 1) UART_Write_Char_To_Buffer('\0',uno);
 	}
 }
 
