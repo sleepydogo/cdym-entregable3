@@ -42,10 +42,7 @@ void SEOS_Init_Timer() {
 uint8_t error_uart = 0;
 
 void SEOS_Schedule_Tasks() {
-	UART_flag=1; //actualizar periferico
-	//if (!RTTTL_Flag_stop_status()) {
-		RTTTL_play_note(); 
-	//}
+	UART_flag=1;
 }
 
 void SEOS_Dispatch_Tasks() {
@@ -60,4 +57,5 @@ void SEOS_Dispatch_Tasks() {
 ISR (TIMER0_COMPA_vect) // ISR para la interrupci�n de comparaci�n del Timer 0
 {
 	SEOS_Schedule_Tasks();
+	RTTTL_interruption_handler();
 }

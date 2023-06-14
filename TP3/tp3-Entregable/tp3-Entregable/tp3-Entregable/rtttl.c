@@ -1,38 +1,26 @@
 /*
- * rtttl.c
+ * EjemploTimerRingtone.c
  *
- * Created: 09/06/2023 18:54:23
- *  Author: Usuario
- */ 
+ * Created: 23/10/2020 08:26:59 p. m.
+ * Autor:								Pereira F?bio (01/09/2008) - Para un microcontrolador Freescale HCS08
+ * Autor migraci?n / modificaci?n:		Perri Victor
+ * Asignatura:							Dise?o de Controladores Digitales
+-----------------------------------------------------------*/
 
-// Colección de música RTTL
+#include "main.h"
 
-#include "rtttl.h"
-
-
-unsigned char temp_duration, temp_octave, current_note, dot_flag;
-unsigned int calc_duration;
-
-
-uint8_t sound_playing = 0, duration_timer, duration, tempo, octave, FLAG_stop = 1, readyToPlay = 0;
-
+// Colecci?n de m?sica RTTL
 const char *rtttl_library[]=
 {
 	"TheSimpsons:d=4,o=5,b=160:c.6,e6,f#6,8a6,g.6,e6,c6,8a,8f#,8f#,8f#,2g,8p,8p,8f#,8f#,8f#,8g,a#.,8c6,8c6,8c6,c6",
-
-	"MissionImp:d=4,o=6,b=150:16d5,16d#5,16d5,16d#5,16d5,16d#5,16d5,16d5,16d#5,16e5,16f5,16f#5,16g5,8g5,4p,8g5,4p,8a#5,8p,8c6,8p,8g5,4p,8g5,4p,8f5,8p,8p,8g5,4p,4p,8a#5,8p,8c6,8p,8g5,4p,4p,8f5,8p,8f#5,8p,8a#5,8g5,1d5",
-
-	"Batman:d=8,o=5,b=160:16a,16g#,16g,16f#,16f,16f#,16g,16g#,4a.,p,d,d,c#,c#,c,c,c#,c#,d,d,c#,c#,c,c,c#,c#,d,d,c#,c#,c,c,c#,c#,g6,p,4g6",
-
-	"Pinkpanther:d=16,o=5,b=160:8d#,8e,2p,8f#,8g,2p,8d#,8e,p,8f#,8g,p,8c6,8b,p,8d#,8e,p,8b,2a#,2p,a,g,e,d,2e",
-
-	"Adamsfamily:d=4,o=5,b=160:8c,f,8a,f,8c,b4,2g,8f,e,8g,e,8e4,a4,2f,8c,f,8a,f,8c,b4,2g,8f,e,8c,d,8e,1f,8c,8d,8e,8f,1p,8d,8e,8f#,8g,1p,8d,8e,8f#,8g,p,8d,8e,8f#,8g,p,8c,8d,8e,8f",
-
-	"Argentina:d=4,o=5,b=70:8e.4,8e4,8e4,8e.4,8f4,8g4,8a4,g4,8p,8g4,8a4,8a4,8g4,c,g4,8f4,e.4,8p,8e4,8f4,8g4,8d4,d4,8d4,8e4,8f4,c4,16p,8c4,8d4,8c4,8e4,g4,16p,8g4,8g4,8a4,c,16p",
+	"Indiana:d=4,o=5,b=250:e,8p,8f,8g,8p,1c6,8p.,d,8p,8e,1f,p.,g,8p,8a,8b,8p,1f6,p,a,8p,8b,2c6,2d6,2e6,e,8p,8f,8g,8p,1c6,p,d6,8p,8e6,1f.6,g,8p,8g,e.6,8p,d6,8p,8g,e.6,8p,d6,8p,8g,f.6,8p,e6,8p,8d6,2c6",
+	"killing me softly:d=4,o=5,b=90:p,8e,f,g,8a,a,8g,d,g.,p,8p,8a,g,8f,8e,8e,8f,2c,p,8e,f,g,8a,a,8g,a,b,8b,8c6,8b,16a,8g,16a,2a,2a.",
+	"Xfiles:d=4,o=5,b=125:e,b,a,b,d6,2b.,1p,e,b,a,b,e6,2b.,1p,g6,f#6,e6,d6,e6,2b.,1p,g6,f#6,e6,d6,f#6,2b.,1p,e,b,a,b,d6,2b.,1p,e,b,a,b,e6,2b.,1p,e6,2b.",
+	"Zorba2:d=4,o=5,b=125:16c#6,2d6,2p,16c#6,2d6,2p,32e6,32d6,32c#6,2d6,2p,16c#6,2d6,2p,16b,2c6,2p,32d6,32c6,32b,2c6,2p,16a#,2b,p,8p,32c6,32b,32a,32g,32b,2a,2p,32a,32g,32f#,32a,1g,1p,8c#6,8d6,8d6,8d6,8d6,8d6,8d6,8d6,8c#6,8d6,8d6,8d6,8d6,8d6,16e6,16d6,16c#6,16e6,8c#6,8d6,8d6,8d6,8d6,8d6,8d6,8d6,8c#6,8d6,8d6,8d6,8d6,8d6"
 };
 
-char *song;
 
+// La siguiente matriz almacena las frecuencias de las notas musicales
 const unsigned int note[4][12] =
 {   // C    C#    D     D#    E     F     F#    G     G#    A     A#    B
 	{262,  277,  294,  311,  330,  349,  370,  392,  415,  440,  466,  494}, // 4ta octava
@@ -41,26 +29,24 @@ const unsigned int note[4][12] =
 	{2093, 2218, 2349, 2489, 2637, 2794, 2960, 3136, 3320, 3520, 3728, 3951}  // 7ma octava
 };
 
-// void RTTTL_nombre_cancion() {
-// 	
-// }
+unsigned int duration_timer;
+volatile unsigned int sound_playing=0;
+unsigned char duration, octave;
+unsigned int tempo;
+uint8_t FLAG_stop = 0;
 
-uint8_t RTTTL_Flag_stop_status() {
-	return FLAG_stop;
-}
-
-void RTTTL_stop_song() {
-	FLAG_stop = 1; 
+void RTTTL_set_flag_stop(uint8_t val) {
+	FLAG_stop = val;
 }
 
 // Saco el sonido por el PIN5 del PORTD: freq en Hz, dur en ms
-void sound(unsigned int freq, unsigned int dur)
+void RTTTL_sound(unsigned int freq, unsigned int dur)
 {
-	while (sound_playing);      // Si hay algún sonido presente, espero a que termine
+	while (sound_playing);      // Si hay alg?n sonido presente, espero a que termine
 	
-	duration_timer = dur;       // Seteo el tiempo de duración
+	duration_timer = dur;       // Seteo el tiempo de duraci?n
 	
-	// Activo la salida y configuro el timer para que genere la señal de la frecuencia apropiada
+	// Activo la salida y configuro el timer para que genere la se?al de la frecuencia apropiada
 	TCCR1A|=(1<<COM1A0);
 	
 	// Actualizo el valor de OCR1A para que produzca la nota adecuada
@@ -69,34 +55,42 @@ void sound(unsigned int freq, unsigned int dur)
 	sound_playing = 1;          // Activo el flag para avisar que hay una nota sonando
 }
 
-void RTTTL_cambiar_cancion(uint8_t cancion_elegida) {
-	*song = rtttl_library[cancion_elegida];
+void RTTTL_interruption_handler(){
+	if (duration_timer) duration_timer--; // Decremento el timer si > 0
+	else                                  // si timer es = 0
+	{
+		TCCR1A=0;	// Desactivo el timer 1
+		sound_playing = 0;                  // Borro el flag para avisar que no hay una nota sonando
+	}
 }
 
-// Esta función reproduce una canción que se le pase en un string con formato RTTTL
-void RTTTL_play_song()
+// Esta funci?n reproduce una canci?n que se le pase en un string con formato RTTTL
+void RTTTL_play_song(uint8_t cancion_elegida)
 {
-	duration = 4;                 // Duración estándar = 4/4 = 1 beat
-	tempo = 63;                   // Tempo estándar = 63 bpm
-	octave = 6;                   // Octava estándar = 6th
+	char *song = rtttl_library[cancion_elegida];
+	unsigned char temp_duration, temp_octave, current_note, dot_flag;
+	unsigned int calc_duration;
+	duration = 4;                 // Duraci?n est?ndar = 4/4 = 1 beat
+	tempo = 63;                   // Tempo est?ndar = 63 bpm
+	octave = 6;                   // Octava est?ndar = 6th
 	while (*song != ':') song++;  // Busca el primer ':'
 	song++;                       // Saltea el primer ':'
 	while (*song!=':')            // Repite hasta encontrar ':'
 	{
-		if (*song == 'd')           // Entra si es el seteo de la duración
+		if (*song == 'd')           // Entra si es el seteo de la duraci?n
 		{
-			duration = 0;             // Seteo la duración en cero (temporalmente)
-			song++;                   // Avanzo al próximo caracter
+			duration = 0;             // Seteo la duraci?n en cero (temporalmente)
+			song++;                   // Avanzo al pr?ximo caracter
 			while (*song == '=') song++;  // Salteo '='
 			while (*song == ' ') song++;  // Salteo los espacios
-			// Si el caracter es un número, seteo la duración
+			// Si el caracter es un n?mero, seteo la duraci?n
 			if (*song>='0' && *song<='9') duration = *song - '0';
-			song++;                   // Avanzo al próximo caracter
-			// Me fijo si el caracter es un número, ya que la diración puede ser de dos dígitos de largo
+			song++;                   // Avanzo al pr?ximo caracter
+			// Me fijo si el caracter es un n?mero, ya que la diraci?n puede ser de dos d?gitos de largo
 			if (*song>='0' && *song<='9')
-			{ // Multiplico duración por 10 y le agrego el valor del caracter
+			{ // Multiplico duraci?n por 10 y le agrego el valor del caracter
 				duration = duration*10 + (*song - '0');
-				song++;                 // Avanzo al próximo caracter
+				song++;                 // Avanzo al pr?ximo caracter
 			}
 			while (*song == ',') song++;  // Salteo ','
 		}
@@ -104,49 +98,46 @@ void RTTTL_play_song()
 		if (*song == 'o')           // Entra si es el seteo de la octava
 		{
 			octave = 0;               // Seteo la octava en cero (temporalmente)
-			song++;                   // Avanzo al próximo caracter
+			song++;                   // Avanzo al pr?ximo caracter
 			while (*song == '=') song++;  // Salteo '='
 			while (*song == ' ') song++;  // Salteo los espacios
-			// Si el caracter es un número, seteo la octava
+			// Si el caracter es un n?mero, seteo la octava
 			if (*song>='0' && *song<='9') octave = *song - '0';
-			song++;                   // Avanzo al próximo caracter
+			song++;                   // Avanzo al pr?ximo caracter
 			while (*song == ',') song++;  // Salteo ','
 		}
 		if (*song == 'b')           // Entra si es el seteo del tempo (beats por minuto)
 		{
 			tempo = 0;                // Seteo el tempo en cero (temporalmente)
-			song++;                   // Avanzo al próximo caracter
+			song++;                   // Avanzo al pr?ximo caracter
 			while (*song == '=') song++;  // Salteo '='
 			while (*song == ' ') song++;  // Salteo los espacios
-			// Ahora leo el seteo del tempo (puede tener 3 dígitos de largo)
+			// Ahora leo el seteo del tempo (puede tener 3 d?gitos de largo)
 			if (*song>='0' && *song<='9') tempo = *song - '0';
-			song++;                   // Avanzo al próximo caracter
+			song++;                   // Avanzo al pr?ximo caracter
 			if (*song>='0' && *song<='9')
 			{
-				tempo = tempo*10 + (*song - '0'); // El tempo tiene dos dígitos
-				song++;                 // Avanzo al próximo caracter
+				tempo = tempo*10 + (*song - '0'); // El tempo tiene dos d?gitos
+				song++;                 // Avanzo al pr?ximo caracter
 				if (*song>='0' && *song<='9')
 				{
-					tempo = tempo*10 + (*song - '0'); // El tempo tiene tres dígitos
-					song++;               // Avanzo al próximo caracter
+					tempo = tempo*10 + (*song - '0'); // El tempo tiene tres d?gitos
+					song++;               // Avanzo al pr?ximo caracter
 				}
 			}
 			while (*song == ',') song++;  // Salteo ','
 		}
 		while (*song == ',') song++;    // Salteo ','
 	}
-	song++;                       // Avanzo al próximo caracter
-	readyToPlay = 1;
-}
-
-void RTTTL_play_note() {
-		if (readyToPlay == 0) return;
-
-		//current_note = 255;         // Nota por defecto = pausa
-		temp_octave = octave;       // Seteo la octava a la por defecto de la canción
-		temp_duration = duration;   // Seteo la duración a la por defecto de la canción
-		dot_flag = 0;               // Borro el flag de detección de punto
-		// Busco un prefijo de duración
+	song++;                       // Avanzo al pr?ximo caracter
+	// read the musical notes
+	while ((*song) && !FLAG_stop)                 // Repito hasta que el caracter sea null
+	{
+		current_note = 255;         // Nota por defecto = pausa
+		temp_octave = octave;       // Seteo la octava a la por defecto de la canci?n
+		temp_duration = duration;   // Seteo la duraci?n a la por defecto de la canci?n
+		dot_flag = 0;               // Borro el flag de detecci?n de punto
+		// Busco un prefijo de duraci?n
 		if (*song>='0' && *song<='9')
 		{
 			temp_duration = *song - '0';
@@ -169,53 +160,47 @@ void RTTTL_play_note() {
 			case 'b': current_note = 11; break;   // B (si)
 			case 'p': current_note = 255; break;  // pausa
 		}
-		song++;                     // Avanzo al próximo caracter
+		song++;                     // Avanzo al pr?ximo caracter
 		// Busco un '#' siguiendo la nota
 		if (*song=='#')
 		{
 			current_note++;   // Incremento la nota (A->A#, C->C#, D->D#, F->F#, G->G#)
-			song++;                   // Avanzo al próximo caracter
+			song++;                   // Avanzo al pr?ximo caracter
 		}
-		
-		// Busco '.' (extiende la duración de la nota un 50%)
+		// Busco '.' (extiende la duraci?n de la nota un 50%)
 		if (*song=='.')
 		{
 			dot_flag = 1;             // Si se encuentra '.', seteo el flag
-			song++;                   // Avanzo al próximo caracter
+			song++;                   // Avanzo al pr?ximo caracter
 		}
 		// Busco un sufijo de una octava
 		if (*song>='0' && *song<='9')
 		{
 			temp_octave = *song - '0';// Seteo la octava en consecuencia
-			song++;                   // Avanzo al próximo caracter
+			song++;                   // Avanzo al pr?ximo caracter
 		}
-		if (*song=='.') // Un punto puede ser encontrado incluso después de una octava
+		if (*song=='.') // Un punto puede ser encontrado incluso despu?s de una octava
 		{
 			dot_flag = 1;             // Si se encuentra '.', seteo el flag
-			song++;                   // Avanzo al próximo caracter
+			song++;                   // Avanzo al pr?ximo caracter
 		}
 		while (*song == ',') song++;    // Salteo ','
-		// Calculo la duración de la nota
+		// Calculo la duraci?n de la nota
 		calc_duration = (60000/tempo)/(temp_duration);
 		calc_duration *= 4;         // La nota completa tiene cuatro beats
-		// Chequeo si el flag de punto está activado, de ser así, extiendo la duración en un 50%
+		// Chequeo si el flag de punto est? activado, de ser as?, extiendo la duraci?n en un 50%
 		if (dot_flag) calc_duration = (calc_duration*3)/2;
-		// Si la nota actual NO es una pausa, reproduzco la nota usando la función sound
-		if (current_note<255) sound(note[temp_octave-4][current_note],calc_duration);
+		// Si la nota actual NO es una pausa, reproduzco la nota usando la funci?n sound
+		if (current_note<255) RTTTL_sound(note[temp_octave-4][current_note],calc_duration);
 		else
 		{ // Si la nota actual es una pausa (255), espero dicha cantidad de tiempo
 			duration_timer = calc_duration;
 			sound_playing = 1;
 		}
 		while (sound_playing);      // Espero a la que nota/pausa en curso finalice
-}
-
-
-void RTTTL_flags_interrupcion() {
-	if (duration_timer) duration_timer--; // Decremento el timer si > 0
-	else                                  // si timer es = 0
-	{
-		TCCR1A=0;	// Desactivo el timer 1
-		sound_playing = 0;                  // Borro el flag para avisar que no hay una nota sonando
 	}
 }
+
+
+
+

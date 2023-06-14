@@ -13,12 +13,9 @@
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
 
-void sound(unsigned int freq, unsigned int dur);
-void RTTTL_play_song(void);
-void RTTTL_play_note(void);
-void RTTTL_flags_interrupcion(void);
-void RTTTL_cambiar_cancion(uint8_t cancion_elegida);
-void RTTTL_stop_song(void);
-uint8_t RTTTL_Flag_stop_status();
+void RTTTL_sound(unsigned int freq, unsigned int dur);
+void RTTTL_play_song(uint8_t cancion_elegida);
+void RTTTL_set_flag_stop(uint8_t val);
+void RTTTL_interruption_handler(void);
 
 #endif /* RTTTL_H_ */

@@ -27,7 +27,7 @@ void MENU_Show_Menu(void);
 void MENU_Command_Update(const char * RX_buffer);
 void MENU_Perform_Task(void);
 void MENU_Show_Canciones(void);
-int compareCommand(const char* str1, const char* str2, uint8_t is_num);
+uint8_t MENU_compareCommand(const char* str1, const char* str2, uint8_t is_num);
 
 
 #endif /* MENU_H_ */

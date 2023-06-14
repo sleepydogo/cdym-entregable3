@@ -31,13 +31,13 @@ void MENU_Show_Menu(void)
  
 void MENU_Command_Update(const char* RX_buffer)
 {
-	if (compareCommand(RX_buffer, "PLAY", 0))
+	if (MENU_compareCommand(RX_buffer, "PLAY", 0))
 	SystemState = ESTADO_PLAY;
-	else if (compareCommand(RX_buffer, "STOP", 0)) 
+	else if (MENU_compareCommand(RX_buffer, "STOP", 0)) 
 	SystemState = ESTADO_STOP;
-	else if (compareCommand(RX_buffer, "RESET", 0))
+	else if (MENU_compareCommand(RX_buffer, "RESET", 0))
 	SystemState = ESTADO_RESET;
-	else if (compareCommand(RX_buffer, "NUM ", 1) && (1 <= cancion_elegida) && (cancion_elegida <= 6))
+	else if (MENU_compareCommand(RX_buffer, "NUM ", 1) && (1 <= cancion_elegida) && (cancion_elegida <= 6))
 	SystemState = ESTADO_NUM;
 	else {
 		UART_Write_String_To_Buffer("Comando no valido.\r\n");
@@ -45,7 +45,7 @@ void MENU_Command_Update(const char* RX_buffer)
 	}
 }
 
-int compareCommand(const char* str1, const char* str2, uint8_t is_num)
+uint8_t MENU_compareCommand(const char* str1, const char* str2, uint8_t is_num)
 {
 	uint8_t i = 0, is_integer = 1;
 	if (!is_num) {
@@ -73,10 +73,10 @@ void MENU_Perform_Task()
 		case ESTADO_PLAY:
 		{
 			char status[20];
-			if (cancion_elegida != 0) {
+			if ((cancion_elegida >= 1) && (cancion_elegida <= 6)) {
 				sprintf(status, "	Reproduciendo	--> %d \r", cancion_elegida);
 				UART_Write_String_To_Buffer(status);
-				RTTTL_play_song();	
+				RTTTL_play_song(cancion_elegida);	
 			}
 			else {
 				UART_Write_String_To_Buffer("\n	Error: No se ha seleccionado una cancion... \n\r");
@@ -92,10 +92,9 @@ void MENU_Perform_Task()
 		}
 		case ESTADO_NUM:
 		{
-			char status[20];
+			char status[30];
 			sprintf(status, "	Cancion elegida	--> %d \r", cancion_elegida);
 			UART_Write_String_To_Buffer(status);
-			RTTTL_cambiar_cancion(cancion_elegida-1);
 			SystemState = -1;
 			break;
 		}

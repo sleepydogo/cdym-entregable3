@@ -51,40 +51,6 @@ void UART_Write_String_To_Buffer(const char* STR_PTR){
 	}
 }
 
-char UART_Get_Char_From_Buffer(char *ch){
-    // Hay nuevo dato en el buffer?
-    if (RXindice_lectura < RXindice_escritura){
-        *ch = RX_buffer[RXindice_lectura];
-        RXindice_lectura++;
-        return 1; // Hay nuevo dato
-    }
-    else
-    {
-        RXindice_lectura = 0;
-        RXindice_escritura = 0;
-        return 0; // No Hay
-    }
-}
-
-void UART_Send_Char (char dato)
-{
-	long Timeout = 0;
-	while ( ( ++Timeout ) && ((UCSR0A & (1<<UDRE0))==0));
-	if (Timeout != 0)
-	UDR0 = dato;
-	else {
-		
-	}
-}
-
-char UART_Receive_data(char *dato){
-	if (UCSR0A & (1 << RXC0)){
-		*dato = UDR0;
-		return 1;
-	} else
-	return 0;
-}
-
 void UART_TX_Interrupt_Enable(void){
 	UCSR0B |= (1<<UDRIE0);
 }
@@ -142,6 +108,7 @@ ISR(USART_RX_vect) {
 		}
 		if (aux == '\n'){
 			FLAG_datos_recibidos = 1;
+			if (MENU_compareCommand(RX_buffer, "STOP", 0)) RTTTL_set_flag_stop(1);
 			UART_RX_Interrupt_Disable();	
 		}
 	}

@@ -3,7 +3,6 @@
  <FRAME activewindow="0">
   <PLACEMENT>2c0000000200000003000000ffffffffffffffffffffffffffffffffa900000000000000c5060000e7030000</PLACEMENT>
   <WINDOW type="default" module="ISIS"/>
-  <WINDOW type="default" module="VSMDEBUG"/>
  </FRAME>
  <MODULE name="VSMDEBUG">
   <PWI>
@@ -39,7 +38,7 @@
      <ITEM name="HexMode">0</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="226" x="275" flags="00000008" y="197" h="215" pid="3" iid="1">
+   <POPUP w="30" x="275" flags="00000008" y="197" h="16" pid="3" iid="1">
     <PROPERTIES/>
    </POPUP>
    <POPUP w="8" x="295" flags="0000000a" y="217" h="1" pid="10" iid="1">
