@@ -2,7 +2,7 @@
  * seos.h
  *
  * Created: 09/06/2023 18:57:39
- *  Author: Usuario
+ *  Author: Tomas E. Schattmann y Mariano A. Rodriguez Mesa
  */ 
 
 

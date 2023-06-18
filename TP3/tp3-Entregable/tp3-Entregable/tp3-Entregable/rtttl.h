@@ -2,7 +2,7 @@
  * rtttl.h
  *
  * Created: 09/06/2023 18:54:35
- *  Author: Usuario
+ *  Author: Tomas E. Schattmann y Mariano A. Rodriguez Mesa
  */ 
 
 

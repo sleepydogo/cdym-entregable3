@@ -18,6 +18,8 @@ const char PROGMEM song2 [] = "killing me softly:d=4,o=5,b=90:p,8e,f,g,8a,a,8g,d
 const char PROGMEM song3 [] = "Xfiles:d=4,o=5,b=125:e,b,a,b,d6,2b.,1p,e,b,a,b,e6,2b.,1p,g6,f#6,e6,d6,e6,2b.,1p,g6,f#6,e6,d6,f#6,2b.,1p,e,b,a,b,d6,2b.,1p,e,b,a,b,e6,2b.,1p,e6,2b.";
 const char PROGMEM song4 [] = "Zorba2:d=4,o=5,b=125:16c#6,2d6,2p,16c#6,2d6,2p,32e6,32d6,32c#6,2d6,2p,16c#6,2d6,2p,16b,2c6,2p,32d6,32c6,32b,2c6,2p,16a#,2b,p,8p,32c6,32b,32a,32g,32b,2a,2p,32a,32g,32f#,32a,1g,1p,8c#6,8d6,8d6,8d6,8d6,8d6,8d6,8d6,8c#6,8d6,8d6,8d6,8d6,8d6,16e6,16d6,16c#6,16e6,8c#6,8d6,8d6,8d6,8d6,8d6,8d6,8d6,8c#6,8d6,8d6,8d6,8d6,8d6";
 
+const uint16_t duracion_cancion[5] = {108, 193, 126, 146, 314}; 
+const char* const song_table[] PROGMEM = {song0, song1, song2, song3, song4};
 
 // La siguiente matriz almacena las frecuencias de las notas musicales
 const unsigned int note[4][12] =
@@ -32,8 +34,14 @@ unsigned int duration_timer;
 volatile unsigned int sound_playing=0;
 unsigned char duration, octave;
 unsigned int tempo;
+
+// Para que una cancion sea reproducida tiene que tener valor 0
 uint8_t FLAG_stop = 0;
 
+/*
+	RTTTL_set_flag_stop:
+		Recibe como parametro el valor booleano val y lo setea en la variable interna FLAG_STOP
+*/
 void RTTTL_set_flag_stop(uint8_t val) {
 	FLAG_stop = val;
 }
@@ -54,6 +62,11 @@ void RTTTL_sound(unsigned int freq, unsigned int dur)
 	sound_playing = 1;          // Activo el flag para avisar que hay una nota sonando
 }
 
+/*
+	RTTTL_interruption_handler:
+		Se encarga de realizar el decremento del timer y de borrar el flag de una nota sonando.
+		Se ejecuta cada vez que hay una interrupcion del TIMER 0
+*/
 void RTTTL_interruption_handler(){
 	if (duration_timer) duration_timer--; // Decremento el timer si > 0
 	else                                  // si timer es = 0
@@ -63,35 +76,23 @@ void RTTTL_interruption_handler(){
 	}
 }
 
-void RTTTL_switch_songs(uint8_t cancion_elegida) {
+/*
+	RTTTL_get_song_name:
+		Recibe por parametro un valor numerico cancion_elegida y lee el nombre de dicha cancion.
+*/
+void RTTTL_get_song_name(uint8_t cancion_elegida) {
+	// obtengo la posicion de memoria de la cancion elegida
+	//char *song = RTTL_switch_songs(cancion_elegida);
 	
 }
 
 
-// Esta funci?n reproduce una canci?n que se le pase en un string con formato RTTTL
+// Esta funcion reproduce una cancion dependiendo del numero que se pase por parametro
 void RTTTL_play_song(uint8_t cancion_elegida)
 {
-	char *song;
-	switch (cancion_elegida)
-	{
-	case 0:
-		song = song0;
-	break;
-	case 1:
-		song = song1;
-	break;
-	case 2:
-		song = song2;
-	break;
-	case 3:
-		song = song3;
-	break;
-	case 4:
-		song = song4;
-	break;
-	default:
-		return;
-	}
+	char buffer_song[duracion_cancion[cancion_elegida]];
+	strcpy_P(buffer_song, (char *)pgm_read_word(&(song_table[cancion_elegida])));
+	char * song = buffer_song;
 	unsigned char temp_duration, temp_octave, current_note, dot_flag;
 	unsigned int calc_duration;
 	duration = 4;                 // Duraci?n est?ndar = 4/4 = 1 beat

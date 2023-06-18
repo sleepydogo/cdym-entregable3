@@ -28,8 +28,8 @@ void UART_TX_Interrupt_Disable(void);
 void UART_RX_Interrupt_Enable(void);
 void UART_RX_Interrupt_Disable(void);
 
-void UART_Update(int * Error_code);									
+void UART_Update();									
 void UART_Write_String_To_Buffer(const char* STR_PTR);	
-void UART_Write_Char_To_Buffer (const char data, int * Error_code);		
+void UART_Write_Char_To_Buffer (const char data);		
 	
 #endif // UART_H

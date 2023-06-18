@@ -2,21 +2,19 @@
  * seos.c
  *
  * Created: 09/06/2023 18:57:26
- *  Author: Usuario
+ *  Author: Tomas E. Schattmann y Mariano A. Rodriguez Mesa
  */
  
 
 #include "seos.h"
 
-uint8_t UART_flag = 0, MENU_contador = 0;
+// Flag interno que representa si se debe ejecutar la funcion UART_update
+uint8_t UART_flag = 0;
 
-void SEOS_Go_To_Sleep() {
-	set_sleep_mode(SLEEP_MODE_PWR_DOWN);  // Configura el modo de bajo consumo
-	sleep_enable();  // Habilita el sleep mode
-	sleep_cpu();  // Pone el microcontrolador en sleep mode
-	sleep_disable();  // Deshabilita el sleep mode cuando se despierte
-}
-
+/*
+	SEOS_Init_Timer:
+		Inicializa los registros internos del timer 0 y el timer 1 para generar interrupciones.
+*/
 void SEOS_Init_Timer() {
 	// ------------------------ Timer 0 ------------------------
 	
@@ -39,16 +37,24 @@ void SEOS_Init_Timer() {
 	sei();
 }
 
-uint8_t error_uart = 0;
 
+/*
+	SEOS_Schedule_Tasks:
+		Esta funcion se ejecuta en cada interrupcion del timer 0, pone el flag de la UART en 1.
+*/
 void SEOS_Schedule_Tasks() {
 	UART_flag=1;
 }
 
+/*
+	SEOS_Dispatch_Tasks:
+		Esta funcion se ejecuta constantemente, si el flag de la UART es uno, ejecuta la funcion UART_update, ademas se invoca a la funcion 
+		MENU_Perform_task la cual ejecuta las acciones correspondientes dependiendo de la opcion de menu que se haya seleccionado.
+*/
 void SEOS_Dispatch_Tasks() {
 	if (UART_flag) {
 		UART_flag=0;
-		UART_Update(&error_uart);
+		UART_Update();
 	}
 	MENU_Perform_Task();
 }
