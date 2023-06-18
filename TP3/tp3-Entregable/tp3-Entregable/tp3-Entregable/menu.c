@@ -28,24 +28,11 @@ const char * const option_table[] PROGMEM = {option0, option1,option2,option3,op
 void MENU_Show_Canciones(void) {
 	
 	for (uint8_t i = 0; i <= 5; i ++) {
-		char tempBuffer[30];
-		
-		// Copiar el string hasta el primer ':'
-		strncpy_P(tempBuffer, option_table[i], strchr_P(option_table[i], ':') - option_table[i]);
- 
-		// Añadir el carácter nulo al final del string copiado
-		tempBuffer[strchr_P(option_table[i], ':') - option_table[i]] = '\0';
-		UART_Write_String_To_Buffer(tempBuffer);
-  
+		char * tempBuffer = RTTTL_get_song_name(i);
+		if (tempBuffer != -1) {
+			UART_Write_String_To_Buffer(tempBuffer);	
+		}
 	}
-
-
-// 	UART_Write_String_To_Buffer("	1. The Simpsons \r");
-// 	UART_Write_String_To_Buffer("	2. Mission Impossible\r");
-// 	UART_Write_String_To_Buffer("	3. Batman\r");
-// 	UART_Write_String_To_Buffer("	4. La pantera rosa\r");
-// 	UART_Write_String_To_Buffer("	5. Adams Family\r");
-// 	UART_Write_String_To_Buffer("	6. Argentina\r");
 }
 
 
