@@ -2,7 +2,7 @@
  * uart.h
  *
  * Created: 09/06/2023 18:52:22
- *  Author: sleepydogo
+ *  Author: Tomas E. Schattmann, Mariano A. Rodriguez Mesa
  */ 
 
 #ifndef UART_H

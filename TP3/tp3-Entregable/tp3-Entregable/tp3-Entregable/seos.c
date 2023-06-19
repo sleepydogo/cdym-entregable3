@@ -2,7 +2,7 @@
  * seos.c
  *
  * Created: 09/06/2023 18:57:26
- *  Author: Tomas E. Schattmann y Mariano A. Rodriguez Mesa
+ *  Author: Tomas E. Schattmann, Mariano A. Rodriguez Mesa
  */
  
 

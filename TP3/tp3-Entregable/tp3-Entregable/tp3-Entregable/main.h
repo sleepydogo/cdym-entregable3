@@ -2,7 +2,7 @@
  * main.h
  *
  * Created: 09/06/2023 16:14:22
- *  Author: Tomas E. Schattmann y Mariano A. Rodriguez Mesa
+ *  Author: Tomas E. Schattmann, Mariano A. Rodriguez Mesa
  */ 
 
 

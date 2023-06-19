@@ -80,26 +80,17 @@ void RTTTL_interruption_handler(){
 	RTTTL_get_song_name:
 		Recibe por parametro un valor numerico cancion_elegida y lee el nombre de dicha cancion.
 */
-char * RTTTL_get_song_name(uint8_t cancion_elegida) {
-	char buffer_song[duracion_cancion[cancion_elegida]], buffer_copia[30];
-	char *posicion;
+void RTTTL_get_song_name(uint8_t cancion_elegida) {
+	char buffer_song[duracion_cancion[cancion_elegida]];
+
 	strcpy_P(buffer_song, (char *)pgm_read_word(&(song_table[cancion_elegida])));
+	char * song = buffer_song;
 	
-	posicion = strchr(buffer_song, ':'); // Buscamos el primer ':'
-	if (posicion != NULL) {
-        // Calcular la longitud del substring hasta el primer ':'
-        int longitud = posicion - buffer_song;
-
-        // Copiar el substring hasta el primer ':' en el buffer "copia"
-        strncpy(buffer_copia, buffer_song, longitud);
-        buffer_copia[longitud] = '\0'; // Agregar el carácter nulo al final del substring
-
-        return buffer_copia;
-    } else {
-		return -1;
+	while (* song != ':') {
+		UART_Write_Char_To_Buffer(song);	
+		song++;
 	}
-	
-}
+}	
 
 
 // Esta funcion reproduce una cancion dependiendo del numero que se pase por parametro

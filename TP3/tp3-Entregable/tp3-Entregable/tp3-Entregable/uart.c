@@ -2,7 +2,7 @@
  * uart.c
  *
  * Created: 09/06/2023 18:52:36
- *  Author: sleepydogo
+ *  Author: Tomas E. Schattmann, Mariano A. Rodriguez Mesa
  */
 
 #include "uart.h"

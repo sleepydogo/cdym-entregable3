@@ -26,13 +26,11 @@ const uint8_t option_length [5] = {8,44,54,61,49,13};
 const char * const option_table[] PROGMEM = {option0, option1,option2,option3,option4, songMenu0};
 
 void MENU_Show_Canciones(void) {
-	
-	for (uint8_t i = 0; i <= 5; i ++) {
-		char * tempBuffer = RTTTL_get_song_name(i);
-		if (tempBuffer != -1) {
-			UART_Write_String_To_Buffer(tempBuffer);	
-		}
-	}
+	UART_Write_String_To_Buffer("\t1. Los Simpson\r");
+	UART_Write_String_To_Buffer("\t2. Indiana\r");
+	UART_Write_String_To_Buffer("\t3. Killing me softly\r");
+	UART_Write_String_To_Buffer("\t4. X Files\r");
+	UART_Write_String_To_Buffer("\t5. Zorba 2\r");
 }
 
 
@@ -61,7 +59,7 @@ void MENU_Command_Update(const char* RX_buffer)
 	SystemState = ESTADO_STOP;
 	else if (MENU_Compare_Command(RX_buffer, "RESET", 0))
 	SystemState = ESTADO_RESET;
-	else if (MENU_Compare_Command(RX_buffer, "NUM ", 1) && (1 <= cancion_elegida) && (cancion_elegida <= 6)) // Aqui para entrar al ESTADO_PLAY se necesita que la cancion_elegida este comprendida entre [1,6]
+	else if (MENU_Compare_Command(RX_buffer, "NUM ", 1) && (1 <= cancion_elegida) && (cancion_elegida <= 5)) // Aqui para entrar al ESTADO_PLAY se necesita que la cancion_elegida este comprendida entre [1,6]
 	SystemState = ESTADO_NUM;																											
 	else {
 		UART_Write_String_To_Buffer("Comando no valido.\r\n");
@@ -111,12 +109,12 @@ void MENU_Perform_Task()
 		{
 			char status[20];
 			if ((cancion_elegida >= 1) && (cancion_elegida <= 6)) {
-				sprintf(status, "	Reproduciendo	--> %d \r", cancion_elegida);
+				sprintf(status, "\tReproduciendo	--> %d \r", cancion_elegida);
 				UART_Write_String_To_Buffer(status);
 				RTTTL_play_song(cancion_elegida);	
 			}
 			else {
-				UART_Write_String_To_Buffer("\n	Error: No se ha seleccionado una cancion... \n\r");
+				UART_Write_String_To_Buffer("\n\tError: No se ha seleccionado una cancion... \n\r");
 			}
 			SystemState = -1;
 			break;
@@ -127,7 +125,7 @@ void MENU_Perform_Task()
 		*/
 		case ESTADO_STOP:
 		{
-			UART_Write_String_To_Buffer("Cancion detenida\r");
+			UART_Write_String_To_Buffer("\tCancion detenida\r");
 			RTTTL_set_flag_stop(0);
 			SystemState = -1;
 			break;
@@ -138,7 +136,7 @@ void MENU_Perform_Task()
 		case ESTADO_NUM:
 		{
 			char status[30];
-			sprintf(status, "	Cancion elegida	--> %d \r", cancion_elegida);
+			sprintf(status, "\tCancion elegida	--> %d \r", cancion_elegida);
 			UART_Write_String_To_Buffer(status);
 			SystemState = -1;
 			break;
@@ -148,7 +146,7 @@ void MENU_Perform_Task()
 		*/
 		case ESTADO_RESET:
 		{
-			UART_Write_String_To_Buffer("Reseteando ...\r");
+			UART_Write_String_To_Buffer("Reseteando ...\n\r");
 			SystemState = -1;
 			System_reset();
 			break;
