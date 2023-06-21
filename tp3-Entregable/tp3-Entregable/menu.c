@@ -21,7 +21,7 @@ const char PROGMEM option3 []  = "* NUM: numero de cancion a seleccionar de la l
 const char PROGMEM option4 []  = "* RESET: reinicia el sistema al estado inicial\r";
 const char PROGMEM songMenu0 [] = "Canciones: \r";
 
-const uint8_t option_length [5] = {8,44,54,61,49,13};
+const uint8_t option_length [6] = {8,44,54,61,49,13};
 
 const char * const option_table[] PROGMEM = {option0, option1,option2,option3,option4, songMenu0};
 
@@ -91,6 +91,7 @@ uint8_t MENU_Compare_Command(const char* str1, const char* str2, uint8_t is_num)
 			  }
 		  }
 		  if (is_integer) cancion_elegida = atoi(str1);
+		  return 1;
 	}
 }
 
@@ -111,7 +112,7 @@ void MENU_Perform_Task()
 			if ((cancion_elegida >= 1) && (cancion_elegida <= 6)) {
 				sprintf(status, "\tReproduciendo	--> %d \r", cancion_elegida);
 				UART_Write_String_To_Buffer(status);
-				RTTTL_play_song(cancion_elegida);	
+				RTTTL_play_song(cancion_elegida - 1);	
 			}
 			else {
 				UART_Write_String_To_Buffer("\n\tError: No se ha seleccionado una cancion... \n\r");

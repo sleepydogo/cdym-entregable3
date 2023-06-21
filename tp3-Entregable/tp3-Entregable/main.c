@@ -1,5 +1,5 @@
 /*
- * main.h
+ * main.c
  *
  * Created: 09/06/2023 16:14:22
  *  Author: Tomas E. Schattmann, Mariano A. Rodriguez Mesa
@@ -14,7 +14,7 @@ void System_reset() {
 }
 
 
-void main(void){
+int main(void){
 	UART_Init(BR9600); // Inicia la UART con una baud rate de 9600
 	MENU_Show_Menu(); // Muestra las opciones de menu
 	SEOS_Init_Timer(); // Inicia las interrupciones de timer
@@ -23,4 +23,5 @@ void main(void){
 	while (1){
 		SEOS_Dispatch_Tasks(); // Realiza las tareas programadas en una interrupcion
 	}
+	return 0;
 }
