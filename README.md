@@ -7,4 +7,5 @@ Proyecto creado por Tomas E. Schattmann y Mariano A. Rodriguez Mesa para la pres
 
 Link a los videos de simulación y documentación del proyecto: 
 
-...
+https://drive.google.com/drive/folders/1cN8VdCWeqgq9KaFGKb9F6l_V6PaD8zCx?usp=sharing
+
