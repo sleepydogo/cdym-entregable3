@@ -118,14 +118,14 @@ void UART_Update(){
 ISR(USART_UDRE_vect) {
 	if (TXindice_lectura == TXindice_escritura) {
 		// Se han transmitido todos los datos en el buffer
-		UCSR0B &= ~(1 << UDRIE0);  // Deshabilitar la interrupci髇 de registro de datos vac韔
+		UCSR0B &= ~(1 << UDRIE0);  // Deshabilitar la interrupci贸n de registro de datos vac铆o
 		} else {
 		if (TX_buffer[TXindice_lectura] != '\0') {
-			UDR0 = TX_buffer[TXindice_lectura++];  // Enviar el siguiente car醕ter del buffer
+			UDR0 = TX_buffer[TXindice_lectura++];  // Enviar el siguiente car谩cter del buffer
 			} else {
-			// Fin de mensaje (car醕ter nulo '\0')
-			UCSR0B &= ~(1 << UDRIE0);  // Deshabilitar la interrupci髇 de registro de datos vac韔
-			UART_TX_Interrupt_Disable();  // Habilitar interrupci髇 de recepci髇 USART
+			// Fin de mensaje (car谩cter nulo '\0')
+			UCSR0B &= ~(1 << UDRIE0);  // Deshabilitar la interrupci贸n de registro de datos vac铆o
+			UART_TX_Interrupt_Disable();  // Habilitar interrupci贸n de recepci贸n USART
 		}
 	}
 }
@@ -143,8 +143,10 @@ ISR(USART_RX_vect) {
 		}
 		if (aux == '\n'){
 			FLAG_datos_recibidos = 1;
-			if (MENU_Compare_Command(RX_buffer, "STOP", 0)) RTTTL_set_flag_stop(1);
-			UART_RX_Interrupt_Disable();
+			if (MENU_Compare_Command(RX_buffer, "STOP", 0)) { 
+				RTTTL_set_flag_stop(1);
+				UART_RX_Interrupt_Disable();
+			}
 		}
 	}
 	UART_Write_Char_To_Buffer(aux);
